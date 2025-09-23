@@ -1,8 +1,9 @@
 import { useContext, useEffect, useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { TokenContext } from '../context/tokenContext';
 import urlAPI from '../config/urlAPI';
 import { useNavigation } from '@react-navigation/native';
+import colors from "../design/colors";
 
 function HomeScreen() {
     // Variável state do nome
@@ -51,9 +52,22 @@ function HomeScreen() {
         fetchData();
     }, [token]);
 
+    // Logout
+    function logout() {
+        // Limpa o token
+        setToken('');
+
+        // Redireciona para login
+        return navigation.navigate('Login');
+    }
+
     return (
         <View style={styles.container}>
             <Text>Olá, {name}!</Text>
+
+            <TouchableOpacity style={styles.btnLogout} onPress={() => logout()}>
+                <Text style={styles.textLogout}>Logout</Text>
+            </TouchableOpacity>
         </View>
     );
 }
@@ -64,6 +78,16 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        gap: 10
+    },
+    btnLogout: {
+        padding: 10,
+        borderRadius: 5,
+        backgroundColor: colors.redBase,
+    },
+    textLogout: {
+        color: colors.white,
+        fontWeight: 700,
     }
 })

@@ -1,9 +1,10 @@
-import { useContext, useState } from "react";
+import {useContext, useEffect, useState} from "react";
 import { View, Text, TextInput, Button, Alert, StyleSheet, TouchableOpacity } from "react-native";
 import urlAPI from "../config/urlAPI";
 import colors from "../design/colors";
 import { useNavigation } from "@react-navigation/native";
 import { TokenContext } from "../context/tokenContext";
+import { formatCPF } from "../utils/masks";
 
 // FormLogin
 function FormLogin() {
@@ -16,6 +17,7 @@ function FormLogin() {
 
     // useState do token (context)
     const { setToken } = useContext(TokenContext);
+
 
     // Função assíncrona para envio do formulário
     async function handleSubmit() {
@@ -60,7 +62,7 @@ function FormLogin() {
                 style={styles.input}
                 placeholder="CPF"
                 value={CPF}
-                onChangeText={setCPF}
+                onChangeText={() => setCPF(formatCPF(CPF, setCPF))}
             />
 
             <View style={styles.viewPassword}>

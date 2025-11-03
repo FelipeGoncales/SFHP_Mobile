@@ -1,26 +1,24 @@
 function formatCPF(input, setInput) {
+    if (input === undefined || input === null) return;
 
-    // Pega só os números do input
+    // Remove tudo que não for número
     let value = input.replace(/\D/g, '');
 
-    if (value.length > 11) {
-        return true
+    // Limita a 11 dígitos
+    if (value.length > 11) value = value.slice(0, 11);
+
+    // Monta a máscara dinamicamente
+    let formatted = value;
+    if (value.length > 9) {
+        formatted = value.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, "$1.$2.$3-$4");
+    } else if (value.length > 6) {
+        formatted = value.replace(/(\d{3})(\d{3})(\d{1,3})/, "$1.$2.$3");
+    } else if (value.length > 3) {
+        formatted = value.replace(/(\d{3})(\d{1,3})/, "$1.$2");
     }
 
-    // Máscara base
-    let formatted = '___.___.___-__';
-
-    console.log('for')
-
-    // Preenche a máscara com os números
-    for (let i = 0; i < value.length && i < 11; i++) {
-        formatted = formatted.replace('_', value[i]);
-    }
-
-    console.log(formatted);
-
-    return setInput(formatted);
+    // Só atualiza se o valor realmente mudou
+    setInput((prev) => (prev !== formatted ? formatted : prev));
 }
-
 
 export { formatCPF };

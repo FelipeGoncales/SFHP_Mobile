@@ -113,6 +113,17 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'flex-end'
     },
+    inputPasswordView: {
+        width: '100%',
+        position: "relative"
+    },
+    showPassword: {
+        width: 25,
+        height: 25,
+        position: "absolute",
+        right: 15,
+        transform: "translateY('-51%')"
+    },
     input: {
         borderWidth: 1,
         borderColor: "#ccc",

@@ -4,6 +4,8 @@ import { TokenContext } from '../context/tokenContext';
 import urlAPI from '../config/urlAPI';
 import { useNavigation } from '@react-navigation/native';
 import colors from "../design/colors";
+import Header from '../components/Header';
+import CardConsulta from "../components/CardConsulta";
 
 function HomeScreen() {
     // Variável state do nome
@@ -55,6 +57,13 @@ function HomeScreen() {
 
     return (
         <View style={styles.container}>
+            <Header />
+
+            <View style={styles.containerCardConsulta}>
+                <CardConsulta />
+            </View>
+
+
             <Text>Olá, {name}!</Text>
 
             <TouchableOpacity style={styles.btnLogout} onPress={() => logout()}>
@@ -68,8 +77,8 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        alignItems: 'center',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
         justifyContent: 'center',
         gap: 10
     },
@@ -81,5 +90,9 @@ const styles = StyleSheet.create({
     textLogout: {
         color: colors.white,
         fontWeight: 700,
+    },
+    containerCardConsulta: {
+        boxSizing: 'border-box',
+        width: '100%',
     }
 })

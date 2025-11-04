@@ -6,7 +6,7 @@ export function TokenProvider({ children }) {
     const [token, setToken] = useState('');
 
     return (
-        <TokenContext.Provider value={{token: token, setToken: setToken}}>
+        <TokenContext.Provider value={ {token: token, setToken: setToken} }>
             {children}
         </TokenContext.Provider>
     )

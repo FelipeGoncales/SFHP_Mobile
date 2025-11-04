@@ -1,6 +1,6 @@
 import { StyleSheet, ImageBackground} from 'react-native';
 import Logo from "../components/Logo";
-import FormRecSenha from "../components/FormRecSenha";
+import FormChangePassword from "../components/FormChangePassword";
 
 function RecSenhaScreen() {
 
@@ -8,7 +8,7 @@ function RecSenhaScreen() {
         <ImageBackground source={require('../assets/login-bg.png')} style={styles.bg}>
             <Logo />
 
-            <FormRecSenha />
+            <FormChangePassword />
         </ImageBackground>
     )
 }

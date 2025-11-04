@@ -1,4 +1,4 @@
-import { ImageBackground, Text, StyleSheet } from 'react-native';
+import { ImageBackground, StyleSheet } from 'react-native';
 import Logo from '../components/Logo';
 import FormLogin from '../components/FormLogin';
 

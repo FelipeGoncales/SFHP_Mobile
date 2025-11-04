@@ -4,6 +4,8 @@ import urlAPI from "../config/urlAPI";
 import colors from "../design/colors";
 import { useNavigation } from "@react-navigation/native";
 import { TokenContext } from "../context/tokenContext";
+import { EmailRecSenhaContext } from "../context/emailRecSenhaContext";
+import { CpfPacienteContext } from "../context/CpfPacienteContext";
 import { formatCPF } from "../utils/masks";
 import { getNumber } from "../utils/utils";
 
@@ -24,6 +26,12 @@ function FormLogin() {
 
     // useState do token (context)
     const { setToken } = useContext(TokenContext);
+
+    // useState do email para recuperação de senha
+    const { setEmailRecSenha } = useContext(EmailRecSenhaContext);
+
+    // useState do CPF para recuperação de senha
+    const { setCpfPaciente } = useContext(CpfPacienteContext);
 
     // Função para alterar a visibilidade da senha
     function onShowPassword() {
@@ -63,37 +71,36 @@ function FormLogin() {
     async function redirectRecSenha() {
         // Retorna caso não tenha informado o CPF
         if (!CPF) {
-            return Alert.alert('Infore o CPF!');
+            return Alert.alert('Informe o CPF!');
         }
 
         try {
+
             // Gera o código de verificação
-            const response = await fetch(`${urlAPI}/gerar_codigo`, {
+            const response = await fetch(`${urlAPI}/gerar_codigo?cpf=${getNumber(CPF)}`, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ cpf: getNumber(CPF) }),
             });
 
             // Obtém a resposta
             const data = await response.json();
 
             if (response.ok) {
-                // Armazena o token
-                setToken(data.token);
+                // Armazena o endereço de email para recuperação de senha
+                setEmailRecSenha(data.email);
 
-                // Navega para home
-                navigation.navigate("Home");
+                // Armazena o CPF do paciente
+                setCpfPaciente(getNumber(CPF));
+
+                // Navega para recuperação de senha
+                navigation.navigate("RecSenha");
             } else {
                 // Alerta o erro
                 Alert.alert(data.error);
             }
         } catch (err) {
-            console.log(err)
             // Erro inesperado
             Alert.alert("Erro", "Não foi possível conectar ao servidor");
         }
-
-        return navigation.navigate('RecSenha');
     }
 
     return (

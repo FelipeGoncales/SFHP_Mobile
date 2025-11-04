@@ -4,31 +4,43 @@ import LoginScreen from "./screens/LoginScreen";
 import HomeScreen from "./screens/HomeScreen";
 import RecSenhaScreen from "./screens/RecSenhaScreen"
 import { TokenProvider } from "./context/tokenContext";
+import { CpfPacienteProvider } from "./context/CpfPacienteContext";
+import { EmailRecSenhaProvider } from "./context/emailRecSenhaContext";
+import ChangePasswordScreen from "./screens/changePasswordScreen";
 
 const Stack = createStackNavigator();
 
 export default function App() {
     return (
         <TokenProvider>
-            <NavigationContainer>
-                <Stack.Navigator>
-                    <Stack.Screen
-                        name="Login"
-                        component={LoginScreen}
-                        options={{ headerShown: false }}
-                    />
-                    <Stack.Screen
-                        name="Home"
-                        component={HomeScreen}
-                        options={{ headerShown: false }}
-                    />
-                    <Stack.Screen
-                        name="RecSenha"
-                        component={RecSenhaScreen}
-                        options={{ headerShown: false }}
-                    />
-                </Stack.Navigator>
-            </NavigationContainer>
+            <CpfPacienteProvider>
+                <EmailRecSenhaProvider>
+                    <NavigationContainer>
+                        <Stack.Navigator>
+                            <Stack.Screen
+                                name="Login"
+                                component={LoginScreen}
+                                options={{ headerShown: false }}
+                            />
+                            <Stack.Screen
+                                name="Home"
+                                component={HomeScreen}
+                                options={{ headerShown: false }}
+                            />
+                            <Stack.Screen
+                                name="RecSenha"
+                                component={RecSenhaScreen}
+                                options={{ headerShown: false }}
+                            />
+                            <Stack.Screen
+                                name="ChangePassword"
+                                component={ChangePasswordScreen}
+                                options={{ headerShown: false }}
+                            />
+                        </Stack.Navigator>
+                    </NavigationContainer>
+                </EmailRecSenhaProvider>
+            </CpfPacienteProvider>
         </TokenProvider>
     );
 }

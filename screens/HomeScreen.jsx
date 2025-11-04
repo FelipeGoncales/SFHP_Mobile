@@ -37,14 +37,6 @@ function HomeScreen() {
             // Obtém o tipo do usuário
             const tipoUsuario = parseInt(user.tipo_usuario);
 
-            // Caso o usuário não seja paciente, limpa o token e volta pra login
-            if (tipoUsuario !== 5) {
-                // Limpa o token
-                setToken('');
-                // Redireciona para login
-                return navigation.navigate('Login');
-            }
-
             // Atualiza o nome
             setName(user.nome);
         };

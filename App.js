@@ -2,6 +2,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import LoginScreen from "./screens/LoginScreen";
 import HomeScreen from "./screens/HomeScreen";
+import RecSenhaScreen from "./screens/RecSenhaScreen"
 import { TokenProvider } from "./context/tokenContext";
 
 const Stack = createStackNavigator();
@@ -19,6 +20,11 @@ export default function App() {
                     <Stack.Screen
                         name="Home"
                         component={HomeScreen}
+                        options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                        name="RecSenha"
+                        component={RecSenhaScreen}
                         options={{ headerShown: false }}
                     />
                 </Stack.Navigator>

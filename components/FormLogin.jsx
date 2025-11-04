@@ -5,6 +5,7 @@ import colors from "../design/colors";
 import { useNavigation } from "@react-navigation/native";
 import { TokenContext } from "../context/tokenContext";
 import { formatCPF } from "../utils/masks";
+import { getNumber } from "../utils/utils";
 
 // Import das imagens fixas
 import eye from '../assets/eye.png';
@@ -35,24 +36,64 @@ function FormLogin() {
             const response = await fetch(`${urlAPI}/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ cpf: CPF, senha: password }),
+                body: JSON.stringify({ cpf: getNumber(CPF), senha: password }),
             });
+
             // Obtém a resposta
             const data = await response.json();
 
             if (response.ok) {
                 // Armazena o token
                 setToken(data.token);
+
                 // Navega para home
                 navigation.navigate("Home");
             } else {
                 // Alerta o erro
                 Alert.alert(data.error);
             }
-        } catch {
+        } catch (err) {
+            console.log(err)
             // Erro inesperado
             Alert.alert("Erro", "Não foi possível conectar ao servidor");
         }
+    }
+
+    // Função para redirecionar para a página de recuperar senha
+    async function redirectRecSenha() {
+        // Retorna caso não tenha informado o CPF
+        if (!CPF) {
+            return Alert.alert('Infore o CPF!');
+        }
+
+        try {
+            // Gera o código de verificação
+            const response = await fetch(`${urlAPI}/gerar_codigo`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ cpf: getNumber(CPF) }),
+            });
+
+            // Obtém a resposta
+            const data = await response.json();
+
+            if (response.ok) {
+                // Armazena o token
+                setToken(data.token);
+
+                // Navega para home
+                navigation.navigate("Home");
+            } else {
+                // Alerta o erro
+                Alert.alert(data.error);
+            }
+        } catch (err) {
+            console.log(err)
+            // Erro inesperado
+            Alert.alert("Erro", "Não foi possível conectar ao servidor");
+        }
+
+        return navigation.navigate('RecSenha');
     }
 
     return (
@@ -83,7 +124,9 @@ function FormLogin() {
                         />
                     </TouchableOpacity>
                 </View>
-                <Text style={styles.recSenha}>Recuperar senha</Text>
+                <TouchableOpacity onPress={() => redirectRecSenha()}>
+                    <Text style={styles.recSenha}>Recuperar senha</Text>
+                </TouchableOpacity>
             </View>
 
             <TouchableOpacity style={styles.btn} onPress={handleSubmit}>

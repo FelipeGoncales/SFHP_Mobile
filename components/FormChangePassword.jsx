@@ -17,7 +17,6 @@ function FormRecSenha() {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-
     const navigation = useNavigation();
 
     // Variáveis do context
@@ -44,22 +43,32 @@ function FormRecSenha() {
     // Função para envio do formulário
     async function onHandleSubmit() {
         // Retorna caso não tenha informado o código
-        if (!codigo) {
-            return Alert.alert('Informe o código!');
+        if (!password || !confirmPassword) {
+            return Alert.alert('Informe ambas as senhas');
         }
 
         try {
             // Gera o código de verificação
-            const response = await fetch(`${urlAPI}/validar_codigo?cpf=${getNumber(cpfPaciente)}&codigo=${codigo}`, {
+            const response = await fetch(`${urlAPI}/alterar_senha?cpf=${getNumber(cpfPaciente)}`, {
                 method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    "senha": password,
+                    "confirmarSenha": confirmPassword
+                })
             });
 
             // Obtém a resposta
             const data = await response.json();
 
             if (response.ok) {
+                // Exibe mensagem de sucesso
+                Alert.alert(data.success);
+
                 // Navega para trocar a senha
-                navigation.navigate("ChangePassword");
+                navigation.navigate("Login");
             } else {
                 // Alerta o erro
                 Alert.alert(data.error);

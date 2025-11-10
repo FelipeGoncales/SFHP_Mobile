@@ -134,10 +134,11 @@ const styles = StyleSheet.create({
     modalBarraLateral: {
         backgroundColor: colors.white,
         height: 90,
-        width: 190,
+        width: 180,
         borderRadius: 15,
         justifyContent: "center",
-        paddingHorizontal: 30
+        paddingHorizontal: 25,
+        gap: 10
     },
     textBtn: {
         color: colors.black,
@@ -145,9 +146,10 @@ const styles = StyleSheet.create({
         fontWeight: "500",
     },
     btnBarraLateral: {
-      flexDirection: 'row',
+        flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'flex-start',
+        gap: 5
     },
     img: {
         width: 25,

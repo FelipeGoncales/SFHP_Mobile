@@ -31,4 +31,13 @@ export default {
     // Branco e preto
     white: "#FFFFFF",
     black: "#000000",
+
+    // Cores adicionais
+    blue_hover: "#1876ac",
+    gray_dark: "#747474",
+    red_fundo: "#AF111135",
+    orange_fundo: "#fe660035",
+    yellow_fundo: "#ffb30035",
+    green_fundo: "#00742B35",
+    blue_fundo: "#06047835",
 };

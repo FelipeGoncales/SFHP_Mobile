@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import colors from "../design/colors";
 import Header from '../components/Header';
 import CardConsulta from "../components/CardConsulta";
+import Card_ConsultaAtual from "../components/Card_ConsultaAtual";
 
 function HomeScreen() {
     // Variável state do nome
@@ -58,6 +59,10 @@ function HomeScreen() {
     return (
         <View style={styles.container}>
             <Header />
+
+            <View style={styles.containerCardConsulta}>
+                <Card_ConsultaAtual />
+            </View>
 
             <View style={styles.containerCardConsulta}>
                 <CardConsulta />

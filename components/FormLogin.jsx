@@ -69,6 +69,7 @@ function FormLogin() {
                 // Exibe um alerta com a mensagem de erro retornada pela API.
                 Alert.alert(data.error);
             }
+            
         } catch (err) { // Tratamento de Erro Inesperado
             // Imprime o erro no console
             console.log(err)

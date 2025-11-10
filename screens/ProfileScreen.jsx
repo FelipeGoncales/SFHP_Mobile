@@ -25,7 +25,7 @@ export default ProfileScreen;
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: colors.black,
+        backgroundColor: colors.gray200,
         height: '100%',
     },
     header: {

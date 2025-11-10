@@ -55,7 +55,7 @@ function FormLogin() {
                 setToken(data.token);
 
                 // Navega para home
-                navigation.navigate("Home");
+                navigation.navigate("Profile");
             } else {
                 // Alerta o erro
                 Alert.alert(data.error);

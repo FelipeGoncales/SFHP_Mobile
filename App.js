@@ -7,6 +7,7 @@ import { TokenProvider } from "./context/tokenContext";
 import { CpfPacienteProvider } from "./context/CpfPacienteContext";
 import { EmailRecSenhaProvider } from "./context/emailRecSenhaContext";
 import ChangePasswordScreen from "./screens/changePasswordScreen";
+import profileScreen from "./screens/ProfileScreen";
 
 const Stack = createStackNavigator();
 
@@ -35,6 +36,11 @@ export default function App() {
                             <Stack.Screen
                                 name="ChangePassword"
                                 component={ChangePasswordScreen}
+                                options={{ headerShown: false }}
+                            />
+                            <Stack.Screen
+                                name="Profile"
+                                component={profileScreen}
                                 options={{ headerShown: false }}
                             />
                         </Stack.Navigator>

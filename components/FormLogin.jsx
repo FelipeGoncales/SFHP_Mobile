@@ -9,96 +9,108 @@ import { CpfPacienteContext } from "../context/CpfPacienteContext";
 import { formatCPF } from "../utils/masks";
 import { getNumber } from "../utils/utils";
 
-// Import das imagens fixas
+// Import das imagens fixas.
 import eye from '../assets/eye.png';
 import eyeSlash from '../assets/eye-slash.png';
 
 function FormLogin() {
-    // Variáveis state de CPF e senha
+
+    // Cria uma variável de estado para armazenar o valor digitado no campo de texto e uma função (set) para atualizá-la.
     const [CPF, setCPF] = useState("");
     const [password, setPassword] = useState("");
 
-    // Variável de controle para mostrar ou não a senha
+    // Variável para controlar se o campo de senha deve ser exibido como texto normal (true) ou oculto com pontos (false).
     const [showPassword, setShowPassword] = useState(false);
 
-    // Hook useNavigation
+    // fornece a função navigation para mudar de tela no aplicativo.
     const navigation = useNavigation();
 
-    // useState do token (context)
+    // Obtém a função para armazenar o token (chave de acesso) em um estado global (Context) após um login bem-sucedido.
     const { setToken } = useContext(TokenContext);
 
-    // useState do email para recuperação de senha
+    // Obtém a função para armazenar o e-mail do paciente.
     const { setEmailRecSenha } = useContext(EmailRecSenhaContext);
 
-    // useState do CPF para recuperação de senha
+    // Obtém a função para armazenar o CPF do paciente.
     const { setCpfPaciente } = useContext(CpfPacienteContext);
 
-    // Função para alterar a visibilidade da senha
+    // Função para alterar a visibilidade da senha.
     function onShowPassword() {
         setShowPassword(!showPassword);
     }
 
-    // Função assíncrona para envio do formulário
+    // Função, com operações assíncronas (que levam tempo), para envio do formulário.
     async function handleSubmit() {
+
+        // Lida com erros que podem ocorrer durante a execução do código.
         try {
+            // Inicia a requisição de rede (fetch) de forma assíncrona (await).
+            // ${urlAPI}/login: Endereço para a rota de login no servidor.
             const response = await fetch(`${urlAPI}/login`, {
                 method: "POST",
+                // Informa ao servidor que o corpo da requisição está sendo enviado no formato JSON.
                 headers: { "Content-Type": "application/json" },
+                // Transforma o objeto JavaScript com o CPF e a senha em uma string JSON, que é o formato exigido pela API.
+                // getNumber(CPF): Remove pontos e traços do CPF antes de enviá-lo.
                 body: JSON.stringify({ cpf: getNumber(CPF), senha: password }),
             });
 
-            // Obtém a resposta
+            // Obtém a resposta da requisição e a transforma em um objeto JavaScript (JSON).
+            // 'await': Conversão é assíncrona.
             const data = await response.json();
 
+            // Se a requisição for bem-sucedida.
             if (response.ok) {
-                // Armazena o token
+                // Armazena o token de autenticação (recebido da API) no estado global (Context API).
                 setToken(data.token);
-
-                // Navega para home
+                // Redireciona o paciente para a tela principal do aplicativo.
                 navigation.navigate("Home");
             } else {
-                // Alerta o erro
+                // Exibe um alerta com a mensagem de erro retornada pela API.
                 Alert.alert(data.error);
             }
-        } catch (err) {
+        } catch (err) { // Tratamento de Erro Inesperado
+            // Imprime o erro no console
             console.log(err)
-            // Erro inesperado
+            // Exibe um alerta genérico para o paciente informando a falha de conexão.
             Alert.alert("Erro", "Não foi possível conectar ao servidor");
         }
+
     }
 
-    // Função para redirecionar para a página de recuperar senha
+    // Função assíncrona para redirecionar para a página de recuperar senha.
     async function redirectRecSenha() {
-        // Retorna caso não tenha informado o CPF
+        // Retorna caso o paciente não tenha informado o CPF.
         if (!CPF) {
             return Alert.alert('Informe o CPF!');
         }
 
+        // Tenta executar a requisição à API.
         try {
-
-            // Gera o código de verificação
+            // Gera o código de verificação.
             const response = await fetch(`${urlAPI}/gerar_codigo?cpf=${getNumber(CPF)}`, {
                 method: "POST",
             });
 
-            // Obtém a resposta
+            // Aguarda a resposta do servidor e a converte em um objeto JavaScript.
             const data = await response.json();
 
+            // Verifica se a resposta foi bem-sucedida.
             if (response.ok) {
-                // Armazena o endereço de email para recuperação de senha
+                // Salva o endereço de e-mail (retornado pela API).
                 setEmailRecSenha(data.email);
 
-                // Armazena o CPF do paciente
+                // Salva o CPF.
                 setCpfPaciente(getNumber(CPF));
 
-                // Navega para recuperação de senha
+                // Leva o paciente para a próxima tela.
                 navigation.navigate("RecSenha");
             } else {
-                // Alerta o erro
+                // Exibe um alerta com a mensagem de erro fornecida pelo servidor.
                 Alert.alert(data.error);
             }
-        } catch (err) {
-            // Erro inesperado
+        } catch (err) { // Tratamento de Erro Inesperado
+            // Exibe um alerta genérico para o paciente informando a falha de conexão.
             Alert.alert("Erro", "Não foi possível conectar ao servidor");
         }
     }

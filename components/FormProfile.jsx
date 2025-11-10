@@ -1,13 +1,5 @@
-import { useContext, useState } from "react";
-import {View, Text, TextInput, Image, Alert, StyleSheet, TouchableOpacity, Button} from "react-native";
-import urlAPI from "../config/urlAPI";
+import {View, Text, TextInput, Image, StyleSheet, TouchableOpacity} from "react-native";
 import colors from "../design/colors";
-import { useNavigation } from "@react-navigation/native";
-import { TokenContext } from "../context/tokenContext";
-import { EmailRecSenhaContext } from "../context/emailRecSenhaContext";
-import { CpfPacienteContext } from "../context/CpfPacienteContext";
-import { formatCPF } from "../utils/masks";
-import { getNumber } from "../utils/utils";
 import Colors from "../design/colors";
 import { Picker } from "@react-native-picker/picker";
 

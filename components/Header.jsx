@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
     containerPai: {
         width: '100%',
         padding: 15,
+        paddingTop: 40,
         flexDirection: 'row',
         alignItems: "center",
         justifyContent: "space-between",
@@ -37,8 +38,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     img: {
-        width: 40,
-        height: 40,
+        width: 35,
+        height: 35,
         resizeMode: "contain",
     },
     title: {

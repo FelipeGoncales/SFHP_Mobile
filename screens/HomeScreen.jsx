@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, ScrollView, Image} from 'react-native';
 import { TokenContext } from '../context/tokenContext';
 import urlAPI from '../config/urlAPI';
 import { useNavigation } from '@react-navigation/native';
@@ -57,24 +57,49 @@ function HomeScreen() {
     }
 
     return (
-        <View style={styles.container}>
-            <Header />
+        <ScrollView>
+            <View style={styles.container}>
+                <Header />
 
-            <View style={styles.containerCardConsulta}>
-                <Card_ConsultaAtual />
+                <Text style={styles.textTitleConsulta}>Consulta atual</Text>
+
+                <View style={styles.containerCardConsulta}>
+                    <Card_ConsultaAtual />
+                </View>
+
+                <Text style={styles.textTitleConsulta}>Histórico de consultas</Text>
+
+                <View style={styles.containerCardConsulta}>
+                    <CardConsulta />
+                </View>
+
+                <View style={styles.containerCardConsulta}>
+                    <CardConsulta />
+                </View>
+
+                <View style={styles.containerCardConsulta}>
+                    <CardConsulta />
+                </View>
+
+                <View style={styles.modalBarraLateral}>
+                    <TouchableOpacity style={styles.btnBarraLateral}>
+                        <Image source={require('../assets/icone-user-simples.png')}  style={styles.img}></Image>
+                        <Text style={styles.textBtn}>Minha conta</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.btnBarraLateral}>
+                        <Image source={require('../assets/icone-sair.png')} style={styles.img}></Image>
+                        <Text style={styles.textBtn}>Sair</Text>
+                    </TouchableOpacity>
+                </View>
+
+                <Text>Olá, {name}!</Text>
+
+                <TouchableOpacity style={styles.btnLogout} onPress={() => logout()}>
+                    <Text style={styles.textLogout}>Logout</Text>
+                </TouchableOpacity>
             </View>
-
-            <View style={styles.containerCardConsulta}>
-                <CardConsulta />
-            </View>
-
-
-            <Text>Olá, {name}!</Text>
-
-            <TouchableOpacity style={styles.btnLogout} onPress={() => logout()}>
-                <Text style={styles.textLogout}>Logout</Text>
-            </TouchableOpacity>
-        </View>
+        </ScrollView>
     );
 }
 
@@ -85,7 +110,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'flex-start',
         justifyContent: 'center',
-        gap: 10
+        gap: 20,
     },
     btnLogout: {
         padding: 10,
@@ -99,5 +124,33 @@ const styles = StyleSheet.create({
     containerCardConsulta: {
         boxSizing: 'border-box',
         width: '100%',
+    },
+    textTitleConsulta: {
+        color: colors.blueDark,
+        fontSize: 22,
+        fontWeight: 'bold',
+        paddingHorizontal: 20,
+    },
+    modalBarraLateral: {
+        backgroundColor: colors.white,
+        height: 90,
+        width: 190,
+        borderRadius: 15,
+        justifyContent: "center",
+        paddingHorizontal: 30
+    },
+    textBtn: {
+        color: colors.black,
+        fontSize: 18,
+        fontWeight: "500",
+    },
+    btnBarraLateral: {
+      flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+    },
+    img: {
+        width: 25,
+        height: 25,
     }
 })

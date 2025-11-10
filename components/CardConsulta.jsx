@@ -8,8 +8,8 @@ function CardConsulta() {
         <View style={styles.containerPai}>
 
             <View style={styles.containerTitle}>
-                <Text style={styles.title}>Alta Recebida</Text>
-                <Text style={styles.description}>Concluído</Text>
+                <Text style={styles.title}>Consulta concluída</Text>
+                <Text style={styles.description}>Alta recebida</Text>
             </View>
 
             <View style={styles.containerDate}>
@@ -26,7 +26,6 @@ function CardConsulta() {
                 </TouchableOpacity>
             </View>
 
-
         </View>
     )
 }
@@ -37,7 +36,8 @@ const styles = StyleSheet.create({
     containerPai: {
         height: 200,
         padding: 20,
-        margin: 20,
+        marginHorizontal: 20,
+        marginVertical: 5,
         backgroundColor: colors.white,
         borderRadius: 15,
         gap: 10,
@@ -57,20 +57,20 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     description: {
-        fontSize: 16,
+        fontSize: 12,
         backgroundColor: colors.greenLight,
-        paddingHorizontal: 25,
+        paddingHorizontal: 15,
         paddingVertical: 5,
         borderRadius: 50,
         color: colors.greenDark,
     },
     imgCalendario: {
-        width: 30,
-        height: 30,
+        width: 25,
+        height: 25,
         resizeMode: "contain",
     },
     date: {
-        fontSize: 17,
+        fontSize: 15,
         color: colors.grayDark,
         fontWeight: 'bold',
     },
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     },
     btnMoreDetails: {
         width: "100%",
-        height: 50,
+        paddingVertical: 10,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
@@ -91,10 +91,9 @@ const styles = StyleSheet.create({
         borderStyle: 'solid',
         borderWidth: 2,
         borderRadius: 10,
-        gap: 5,
     },
     textMoreDetails: {
-        fontSize: 17,
+        fontSize: 15,
         fontWeight: 'bold',
         color: colors.blueDark,
     },

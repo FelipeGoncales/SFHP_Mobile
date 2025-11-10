@@ -22,7 +22,7 @@ function FormLogin() {
     // Variável para controlar se o campo de senha deve ser exibido como texto normal (true) ou oculto com pontos (false).
     const [showPassword, setShowPassword] = useState(false);
 
-    // fornece a função navigation para mudar de tela no aplicativo.
+    // Fornece a função navigation para mudar de tela no aplicativo.
     const navigation = useNavigation();
 
     // Obtém a função para armazenar o token (chave de acesso) em um estado global (Context) após um login bem-sucedido.

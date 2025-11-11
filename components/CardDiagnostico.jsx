@@ -1,26 +1,9 @@
-import {useContext, useEffect, useState} from "react";
+import { useContext, useState } from "react";
 import {View, Text, Image, StyleSheet, TouchableOpacity} from "react-native";
 import urlAPI from "../config/urlAPI";
 import colors from "../design/colors";
-import {useNavigation} from "@react-navigation/native";
 
-function CardConsulta({ consulta }) {
-    // Variável useState da data
-    const [date, setDate] = useState(new Date());
-
-    // Use navigation
-    const navigation = useNavigation();
-
-    // Atualiza o valor da data
-    useEffect(() => {
-        setDate(new Date(consulta.data_entrada));
-    }, [consulta]);
-
-    // Função para redirecionar a página de ver mais detalhes
-    function showMoreDetails(idConsulta) {
-        console.log(idConsulta);
-    }
-
+function CardConsulta() {
     return (
         <View style={styles.containerPai}>
 
@@ -31,13 +14,13 @@ function CardConsulta({ consulta }) {
 
             <View style={styles.containerDate}>
                 <Image source={require('../assets/icone-calendario.png')} style={styles.imgCalendario}></Image>
-                <Text style={styles.date}>{date.toLocaleDateString()}</Text>
+                <Text style={styles.date}>11/09/2025</Text>
             </View>
 
             <View style={styles.containerMoreDetails}>
-                <Text style={styles.diagnostic}>Diagnóstico: {consulta.diagnostico}</Text>
+                <Text style={styles.diagnostic}>Diagnóstico: Virose</Text>
 
-                <TouchableOpacity style={styles.btnMoreDetails} onPress={() => showMoreDetails(consulta.id_consulta)}>
+                <TouchableOpacity style={styles.btnMoreDetails}>
                     <Text style={styles.textMoreDetails}>Ver mais detalhes</Text>
                     <Image source={require('../assets/seta-direita.png')} style={styles.imgSeta}></Image>
                 </TouchableOpacity>

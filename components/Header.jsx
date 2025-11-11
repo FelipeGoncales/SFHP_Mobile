@@ -1,9 +1,9 @@
 import { useContext, useState } from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import urlAPI from "../config/urlAPI";
 import colors from "../design/colors";
 
-function Header() {
+function Header({setShowModal, showModal}) {
     return (
         <View style={styles.containerPai}>
             <View style={styles.containerFilho}>
@@ -12,8 +12,13 @@ function Header() {
             </View>
 
             <View style={styles.containerFilho}>
-                <Image source={require('../assets/icone-sininho.png')} style={styles.img}></Image>
-                <Image source={require('../assets/icone-barra-lateral.png')} style={styles.img}></Image>
+                <TouchableOpacity>
+                    <Image source={require('../assets/icone-sininho.png')} style={styles.img}></Image>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={() => setShowModal(!showModal)}>
+                    <Image source={require('../assets/icone-barra-lateral.png')} style={styles.img}></Image>
+                </TouchableOpacity>
             </View>
         </View>
     )

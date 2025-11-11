@@ -1,30 +1,37 @@
 import { useContext, useEffect, useState } from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, ScrollView, Image} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, Alert, RefreshControl} from 'react-native';
 import { TokenContext } from '../context/tokenContext';
 import urlAPI from '../config/urlAPI';
 import { useNavigation } from '@react-navigation/native';
 import colors from "../design/colors";
 import Header from '../components/Header';
 import CardConsulta from "../components/CardConsulta";
-import Card_ConsultaAtual from "../components/Card_ConsultaAtual";
+import CardConsultaAtual from "../components/CardConsultaAtual";
+import ModalBarraLateral from "../components/ModalBarraLateral";
 
 function HomeScreen() {
     // Variável state do nome
-    const [name, setName] = useState('');
+    const [consultas, setConsultas] = useState([]);
+
+    // Variável state para controle da modal
+    const [showModal, setShowModal] = useState(false);
 
     // Hook useNavigation
     const navigation = useNavigation();
 
     // Obtém o token do context
-    const { token, setToken } = useContext(TokenContext);
+    const { token } = useContext(TokenContext);
+
+    // Controle do recarregamento da página
+    const [refreshing, setRefreshing] = useState(false);
 
     // useEffect para buscar dados ao carregar a página
     useEffect(() => {
         // Fetch na URL da API
-        const fetchData = async () => {
+        const fetchGetConsultas = async () => {
             if (!token) return navigation.navigate('Login'); // evita chamada antes de ter o token
 
-            const response = await fetch(`${urlAPI}/cadastro`, {
+            const response = await fetch(`${urlAPI}/get_consultas?p=True`, {
                 method: "GET",
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -34,70 +41,75 @@ function HomeScreen() {
             // Resposta da API
             const data = await response.json();
 
-            // Obtém os dados do usuário
-            const user = data.user;
-
-            // Obtém o tipo do usuário
-            const tipoUsuario = parseInt(user.tipo_usuario);
-
-            // Atualiza o nome
-            setName(user.nome);
+            // Atualiza a lista de consultas
+            setConsultas(data.consultas);
         };
 
-        fetchData();
-    }, [token]);
+        fetchGetConsultas();
+    }, [token, navigation]);
 
-    // Logout
-    function logout() {
-        // Limpa o token
-        setToken('');
+    // Lógica para permitir o recarregamento
+    const onRefresh = async () => {
+        setRefreshing(true);
+        const fetchGetConsultas = async () => {
+            if (!token) return navigation.navigate('Login');
 
-        // Redireciona para login
-        return navigation.navigate('Login');
-    }
+            const response = await fetch(`${urlAPI}/get_consultas?p=True`, {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+
+            const data = await response.json();
+            setConsultas(data.consultas);
+        };
+
+        await fetchGetConsultas();
+        setRefreshing(false);
+    };
 
     return (
-        <ScrollView>
+        <ScrollView
+            refreshControl={
+                <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                />
+            }
+        >
             <View style={styles.container}>
-                <Header />
+                <Header setShowModal={setShowModal} showModal={showModal} />
+
+                {
+                    showModal ? (<ModalBarraLateral setShowModal={setShowModal} />) : null
+                }
 
                 <Text style={styles.textTitleConsulta}>Consulta atual</Text>
 
-                <View style={styles.containerCardConsulta}>
-                    <Card_ConsultaAtual />
-                </View>
+                {consultas && consultas.filter(consulta => consulta?.situacao !== "Alta recebida").length > 0 ? (
+                    consultas
+                        .filter(consulta => consulta?.situacao !== "Alta recebida")
+                        .map((consulta, index) => (
+                            <CardConsultaAtual key={index} consulta={consulta} />
+                        ))
+                ) : (
+                    <Text style={styles.consultNofFound}>Nenhuma consulta encontrada.</Text>
+                )}
 
                 <Text style={styles.textTitleConsulta}>Histórico de consultas</Text>
 
                 <View style={styles.containerCardConsulta}>
-                    <CardConsulta />
+                    {consultas && consultas.filter(consulta => consulta?.situacao === "Alta recebida").length > 0 ? (
+                        consultas
+                            .filter(consulta => consulta?.situacao === "Alta recebida")
+                            .map((consulta, index) => (
+                                <CardConsulta key={index} consulta={consulta} />
+                            ))
+                    ) : (
+                        <Text style={styles.consultNofFound}>Nenhuma consulta encontrada.</Text>
+                    )}
                 </View>
-
-                <View style={styles.containerCardConsulta}>
-                    <CardConsulta />
-                </View>
-
-                <View style={styles.containerCardConsulta}>
-                    <CardConsulta />
-                </View>
-
-                <View style={styles.modalBarraLateral}>
-                    <TouchableOpacity style={styles.btnBarraLateral}>
-                        <Image source={require('../assets/icone-user-simples.png')}  style={styles.img}></Image>
-                        <Text style={styles.textBtn}>Minha conta</Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={styles.btnBarraLateral}>
-                        <Image source={require('../assets/icone-sair.png')} style={styles.img}></Image>
-                        <Text style={styles.textBtn}>Sair</Text>
-                    </TouchableOpacity>
-                </View>
-
-                <Text>Olá, {name}!</Text>
-
-                <TouchableOpacity style={styles.btnLogout} onPress={() => logout()}>
-                    <Text style={styles.textLogout}>Logout</Text>
-                </TouchableOpacity>
             </View>
         </ScrollView>
     );
@@ -124,6 +136,9 @@ const styles = StyleSheet.create({
     containerCardConsulta: {
         boxSizing: 'border-box',
         width: '100%',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        gap: 20,
     },
     textTitleConsulta: {
         color: colors.blueDark,
@@ -131,28 +146,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         paddingHorizontal: 20,
     },
-    modalBarraLateral: {
-        backgroundColor: colors.white,
-        height: 90,
-        width: 180,
-        borderRadius: 15,
-        justifyContent: "center",
-        paddingHorizontal: 25,
-        gap: 10
-    },
-    textBtn: {
-        color: colors.black,
-        fontSize: 18,
-        fontWeight: "500",
-    },
-    btnBarraLateral: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        gap: 5
-    },
-    img: {
-        width: 25,
-        height: 25,
+    consultNofFound: {
+        paddingHorizontal: 22,
+        fontSize: 16,
     }
 })

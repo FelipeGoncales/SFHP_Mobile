@@ -7,11 +7,21 @@ import colors from "../design/colors";
 import FormProfile from "../components/FormProfile";
 
 function ProfileScreen() {
+
+    const navigation = useNavigation();
+
+    function redirectHome() {
+        return navigation.goBack();
+    }
+
     return (
         <View style={styles.container}>
 
             <View style={styles.header}>
-                <Image source={require('../assets/seta-esquerda.png')} style={styles.imgSetaEsquerda}></Image>
+                <TouchableOpacity style={styles.btnGoBack} onPress={redirectHome}>
+                    <Image source={require('../assets/seta-esquerda.png')} style={styles.imgSetaEsquerda}></Image>
+                </TouchableOpacity>
+
                 <Text style={styles.title}>Dados do paciente</Text>
             </View>
 
@@ -34,7 +44,6 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         paddingHorizontal: 20,
         paddingTop: 30,
-        gap: 5
     },
     title: {
         fontSize: 22,
@@ -42,8 +51,12 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     imgSetaEsquerda: {
-        width: 24,
-        height: 24,
-        resizeMode: 'contain',
+        width: 28,
+        height: 28,
+        resizeMode: 'contain'
+    },
+    btnGoBack: {
+        paddingRight: 10,
+        paddingVertical: 10
     }
 })

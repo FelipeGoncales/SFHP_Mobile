@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, Alert} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, Alert, RefreshControl} from 'react-native';
 import { TokenContext } from '../context/tokenContext';
 import urlAPI from '../config/urlAPI';
 import { useNavigation } from '@react-navigation/native';
@@ -22,6 +22,9 @@ function HomeScreen() {
     // Obtém o token do context
     const { token } = useContext(TokenContext);
 
+    // Controle do recarregamento da página
+    const [refreshing, setRefreshing] = useState(false);
+
     // useEffect para buscar dados ao carregar a página
     useEffect(() => {
         // Fetch na URL da API
@@ -43,10 +46,38 @@ function HomeScreen() {
         };
 
         fetchGetConsultas();
-    }, [token]);
+    }, [token, navigation]);
+
+    // Lógica para permitir o recarregamento
+    const onRefresh = async () => {
+        setRefreshing(true);
+        const fetchGetConsultas = async () => {
+            if (!token) return navigation.navigate('Login');
+
+            const response = await fetch(`${urlAPI}/get_consultas?p=True`, {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+
+            const data = await response.json();
+            setConsultas(data.consultas);
+        };
+
+        await fetchGetConsultas();
+        setRefreshing(false);
+    };
 
     return (
-        <ScrollView>
+        <ScrollView
+            refreshControl={
+                <RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                />
+            }
+        >
             <View style={styles.container}>
                 <Header setShowModal={setShowModal} showModal={showModal} />
 

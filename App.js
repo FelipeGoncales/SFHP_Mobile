@@ -9,6 +9,7 @@ import { EmailRecSenhaProvider } from "./context/emailRecSenhaContext";
 import ChangePasswordScreen from "./screens/changePasswordScreen";
 import profileScreen from "./screens/ProfileScreen";
 import DetalhesConsultaScreen from "./screens/DetalhesConsultaScreen";
+import {IdConsultaProvider} from "./context/IdConsultaContext";
 
 const Stack = createStackNavigator();
 
@@ -17,40 +18,42 @@ export default function App() {
         <TokenProvider>
             <CpfPacienteProvider>
                 <EmailRecSenhaProvider>
-                    <NavigationContainer>
-                        <Stack.Navigator>
-                            <Stack.Screen
-                                name="Login"
-                                component={LoginScreen}
-                                options={{ headerShown: false }}
-                            />
-                            <Stack.Screen
-                                name="Home"
-                                component={HomeScreen}
-                                options={{ headerShown: false }}
-                            />
-                            <Stack.Screen
-                                name="RecSenha"
-                                component={RecSenhaScreen}
-                                options={{ headerShown: false }}
-                            />
-                            <Stack.Screen
-                                name="ChangePassword"
-                                component={ChangePasswordScreen}
-                                options={{ headerShown: false }}
-                            />
-                            <Stack.Screen
-                                name="Profile"
-                                component={profileScreen}
-                                options={{ headerShown: false }}
-                            />
-                            <Stack.Screen
-                                name="DetalhesConsulta"
-                                component={DetalhesConsultaScreen}
-                                options={{ headerShown: false }}
-                            />
-                        </Stack.Navigator>
-                    </NavigationContainer>
+                    <IdConsultaProvider>
+                        <NavigationContainer>
+                            <Stack.Navigator>
+                                <Stack.Screen
+                                    name="Login"
+                                    component={LoginScreen}
+                                    options={{ headerShown: false }}
+                                />
+                                <Stack.Screen
+                                    name="Home"
+                                    component={HomeScreen}
+                                    options={{ headerShown: false }}
+                                />
+                                <Stack.Screen
+                                    name="RecSenha"
+                                    component={RecSenhaScreen}
+                                    options={{ headerShown: false }}
+                                />
+                                <Stack.Screen
+                                    name="ChangePassword"
+                                    component={ChangePasswordScreen}
+                                    options={{ headerShown: false }}
+                                />
+                                <Stack.Screen
+                                    name="Profile"
+                                    component={profileScreen}
+                                    options={{ headerShown: false }}
+                                />
+                                <Stack.Screen
+                                    name="DetalhesConsulta"
+                                    component={DetalhesConsultaScreen}
+                                    options={{ headerShown: false }}
+                                />
+                            </Stack.Navigator>
+                        </NavigationContainer>
+                    </IdConsultaProvider>
                 </EmailRecSenhaProvider>
             </CpfPacienteProvider>
         </TokenProvider>

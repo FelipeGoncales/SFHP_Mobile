@@ -11,9 +11,11 @@ function DetalhesConsultaScreen() {
 
     return (
         <ScrollView>
-            <View style={styles.container}>
+            <View>
 
-
+                <TouchableOpacity style={styles.voltar} onPress={navigation.goBack}>
+                    <Text>Voltar</Text>
+                </TouchableOpacity>
 
             </View>
         </ScrollView>
@@ -21,3 +23,9 @@ function DetalhesConsultaScreen() {
 }
 
 export default DetalhesConsultaScreen;
+
+const styles = StyleSheet.create({
+    voltar: {
+        paddingTop: 40,
+    }
+})

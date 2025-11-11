@@ -1,5 +1,6 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import {View, Text, TouchableOpacity, StyleSheet, Image} from "react-native";
+import { IdConsultaContext } from "../context/IdConsultaContext";
 import colors from "../design/colors";
 import {useNavigation} from "@react-navigation/native";
 
@@ -10,6 +11,9 @@ export default function CardConsultaAtual({ consulta }) {
     // Use navigation
     const navigation = useNavigation();
 
+    // Obtém o setIdConsulta do context
+    const { setIdConsulta } = useContext(IdConsultaContext);
+
     // Atualiza o valor da data
     useEffect(() => {
         setDate(new Date(consulta.data_entrada));
@@ -17,7 +21,10 @@ export default function CardConsultaAtual({ consulta }) {
 
     // Função para redirecionar a página de ver mais detalhes
     function showMoreDetails(idConsulta) {
-        console.log(idConsulta);
+        // Salva o id da consulta
+        setIdConsulta(idConsulta);
+        // Redireciona para a tela de detalhes da consulta
+        return navigation.navigate('DetalhesConsulta');
     }
 
     return (

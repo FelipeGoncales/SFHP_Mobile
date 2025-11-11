@@ -1,22 +1,26 @@
-import { useContext, useState } from "react";
-import {View, Text, Image, StyleSheet, TouchableOpacity, ScrollView} from "react-native";
+import React from "react";
+import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import urlAPI from "../config/urlAPI";
 import colors from "../design/colors";
-import Header from "../components/Header";
-import CardConsulta from "../components/CardConsulta";
+import CardDetalhesConsulta from "../components/CardDetalhesConsulta";
 
 function DetalhesConsultaScreen() {
     const navigation = useNavigation();
 
     return (
         <ScrollView>
-            <View>
-
-                <TouchableOpacity style={styles.voltar} onPress={navigation.goBack}>
-                    <Text>Voltar</Text>
+            <View style={styles.container}>
+                {/* Botão de voltar */}
+                <TouchableOpacity style={styles.Return} onPress={navigation.goBack}>
+                    <Image
+                        source={require("../assets/seta-esquerda.png")}
+                        style={styles.ReturnIcon}
+                    />
+                    <Text style={styles.ReturnText}>Detalhes da Consulta</Text>
                 </TouchableOpacity>
 
+                {/* Card principal */}
+                <CardDetalhesConsulta />
             </View>
         </ScrollView>
     );
@@ -25,7 +29,27 @@ function DetalhesConsultaScreen() {
 export default DetalhesConsultaScreen;
 
 const styles = StyleSheet.create({
-    voltar: {
-        paddingTop: 40,
-    }
-})
+    container: {
+        flex: 1,
+        paddingTop: 30,
+    },
+
+    Return: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginBottom: 25,
+    },
+
+    ReturnIcon: {
+        width: 30,
+        height: 30,
+        resizeMode: "contain",
+        tintColor: colors.blueDark,
+    },
+
+    ReturnText: {
+        fontSize: 26,
+        color: colors.blueDark,
+        fontWeight: "bold",
+    },
+});

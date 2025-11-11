@@ -5,29 +5,26 @@ import colors from "../design/colors";
 export default function CardDetalhesConsulta() {
     return (
         <View style={styles.containerPai}>
-            {/* Título e status */}
+            {/* Título e status lado a lado */}
             <View style={styles.containerTitle}>
-                <View>
+                {/* bloco esquerdo: título + data */}
+                <View style={styles.leftBlock}>
                     <Text style={styles.title}>Aguardando Triagem</Text>
                     <Text style={styles.date}>15/09/2025</Text>
                 </View>
+
+                {/* bloco direito: tag de status */}
                 <Text style={styles.description}>Espera da triagem</Text>
             </View>
 
-            {/* Linha vertical de progresso */}
+            {/* Timeline */}
             <View style={styles.timeline}>
                 <View style={[styles.circle, styles.circleActive]} />
-
                 <View style={[styles.line, styles.lineActive]} />
-
                 <View style={styles.circle} />
-
                 <View style={styles.line} />
-
                 <View style={styles.circle} />
-
                 <View style={styles.line} />
-
                 <View style={styles.circle} />
             </View>
 
@@ -38,7 +35,7 @@ export default function CardDetalhesConsulta() {
                     <View style={styles.footerContent}>
                         <Image
                             source={require("../assets/clock-timer.png")}
-                            style={styles.footerIcon}
+                            style={styles.ClockIcon}
                         />
                         <Text style={styles.footerValue}>00:18:32</Text>
                     </View>
@@ -50,7 +47,7 @@ export default function CardDetalhesConsulta() {
                         <Text style={styles.footerValue}>7°</Text>
                         <Image
                             source={require("../assets/icone-user-simples.png")}
-                            style={styles.footerIcon}
+                            style={styles.UserIcon}
                         />
                     </View>
                 </View>
@@ -61,100 +58,108 @@ export default function CardDetalhesConsulta() {
 
 const styles = StyleSheet.create({
     containerPai: {
-        flex: 1,
+        width: "90%",
         alignSelf: "center",
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: colors.white,
-        borderRadius: 16,
+        borderRadius: 20,
+        paddingVertical: 30,
+        paddingHorizontal: 25,
     },
-
-
 
     containerTitle: {
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        marginBottom: 15,
+        width: "100%",
+        marginBottom: 25,
     },
+
+    leftBlock: {
+        flexDirection: "column",
+        alignItems: "flex-start",
+    },
+
     title: {
-        fontSize: 16,
+        fontSize: 18,
         fontWeight: "bold",
-        color: "#000",
     },
+
     date: {
-        fontSize: 13,
+        fontSize: 16,
         color: colors.grayDark,
+        marginTop: 4,
+        fontWeight: "bold",
     },
+
     description: {
         backgroundColor: colors.yellow_fundo,
         color: colors.yellowProtocol,
         paddingHorizontal: 10,
-        paddingVertical: 4,
-        borderRadius: 20,
-        fontSize: 12,
+        paddingVertical: 6,
+        borderRadius: 25,
+        fontSize: 14,
     },
 
     timeline: {
         flexDirection: "column",
-        alignItems: "flex-start",
-        gap: 4,
-    },
-    step: {
-        flexDirection: "row",
         alignItems: "center",
+        gap: 6,
+        marginVertical: 20,
     },
     circle: {
-        width: 18,
-        height: 18,
-        borderRadius: 8,
+        width: 21,
+        height: 21,
+        borderRadius: 11,
         backgroundColor: colors.gray200,
-        marginRight: 10,
     },
     circleActive: {
         backgroundColor: colors.blueBase,
     },
     line: {
-        width: 5,
-        height: 40,
+        width: 7,
+        height: 60,
         backgroundColor: colors.gray200,
-        marginLeft: 6.5,
     },
     lineActive: {
         backgroundColor: colors.blueBase,
-    },
-    stepText: {
-        fontSize: 16,
-        color: colors.black,
     },
 
     footer: {
         flexDirection: "row",
         justifyContent: "space-between",
-        marginTop: 10,
+        width: "100%",
+        marginTop: 25,
     },
     footerItem: {
         alignItems: "center",
-        gap: 5,
+        gap: 8,
     },
     footerLabel: {
         color: colors.blueDark,
-        fontSize: 13,
+        fontSize: 16,
         fontWeight: "bold",
     },
     footerContent: {
         flexDirection: "row",
         alignItems: "center",
-        gap: 6,
+        gap: 8,
     },
     footerValue: {
-        fontSize: 21,
+        fontSize: 24,
         fontWeight: "bold",
         color: colors.black,
     },
-    footerIcon: {
-        width: 24,
-        height: 24,
+    UserIcon: {
+        width: 35,
+        height: 35,
+        resizeMode: "contain",
+        tintColor: colors.black,
+    },
+    ClockIcon: {
+        width: 23,
+        height: 23,
         resizeMode: "contain",
         tintColor: colors.black,
     },

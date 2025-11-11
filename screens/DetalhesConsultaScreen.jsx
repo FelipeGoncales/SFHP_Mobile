@@ -31,13 +31,14 @@ export default DetalhesConsultaScreen;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: 30,
+        paddingTop: 34,
+        gap: 20,
     },
 
     Return: {
         flexDirection: "row",
         alignItems: "center",
-        marginBottom: 25,
+        marginLeft: 20,
     },
 
     ReturnIcon: {

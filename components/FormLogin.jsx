@@ -88,6 +88,7 @@ function FormLogin() {
 
         // Tenta executar a requisição à API.
         try {
+            
             // Gera o código de verificação.
             const response = await fetch(`${urlAPI}/gerar_codigo?cpf=${getNumber(CPF)}`, {
                 method: "POST",
@@ -110,6 +111,7 @@ function FormLogin() {
                 // Exibe um alerta com a mensagem de erro fornecida pelo servidor.
                 Alert.alert(data.error);
             }
+
         } catch (err) { // Tratamento de Erro Inesperado
             // Exibe um alerta genérico para o paciente informando a falha de conexão.
             Alert.alert("Erro", "Não foi possível conectar ao servidor");

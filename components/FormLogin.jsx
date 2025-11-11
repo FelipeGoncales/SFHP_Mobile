@@ -69,9 +69,9 @@ function FormLogin() {
                 // Exibe um alerta com a mensagem de erro retornada pela API.
                 Alert.alert(data.error);
             }
-            
-        } catch (err) { // Tratamento de Erro Inesperado
-            // Imprime o erro no console
+
+        } catch (err) { // Tratamento de Erro Inesperado.
+            // Imprime o erro no console.
             console.log(err)
             // Exibe um alerta genérico para o paciente informando a falha de conexão.
             Alert.alert("Erro", "Não foi possível conectar ao servidor");
@@ -81,6 +81,7 @@ function FormLogin() {
 
     // Função assíncrona para redirecionar para a página de recuperar senha.
     async function redirectRecSenha() {
+
         // Retorna caso o paciente não tenha informado o CPF.
         if (!CPF) {
             return Alert.alert('Informe o CPF!');
@@ -88,7 +89,6 @@ function FormLogin() {
 
         // Tenta executar a requisição à API.
         try {
-            
             // Gera o código de verificação.
             const response = await fetch(`${urlAPI}/gerar_codigo?cpf=${getNumber(CPF)}`, {
                 method: "POST",
@@ -101,10 +101,8 @@ function FormLogin() {
             if (response.ok) {
                 // Salva o endereço de e-mail (retornado pela API).
                 setEmailRecSenha(data.email);
-
                 // Salva o CPF.
                 setCpfPaciente(getNumber(CPF));
-
                 // Leva o paciente para a próxima tela.
                 navigation.navigate("RecSenha");
             } else {
@@ -112,10 +110,11 @@ function FormLogin() {
                 Alert.alert(data.error);
             }
 
-        } catch (err) { // Tratamento de Erro Inesperado
+        } catch (err) { // Tratamento de Erro Inesperado.
             // Exibe um alerta genérico para o paciente informando a falha de conexão.
             Alert.alert("Erro", "Não foi possível conectar ao servidor");
         }
+
     }
 
     return (

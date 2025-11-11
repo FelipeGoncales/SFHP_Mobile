@@ -4,7 +4,6 @@ import { useNavigation } from "@react-navigation/native";
 import urlAPI from "../config/urlAPI";
 import colors from "../design/colors";
 import Header from "../components/Header";
-import Card_ConsultaAtual from "../components/Card_ConsultaAtual";
 import CardConsulta from "../components/CardConsulta";
 
 function DetalhesConsultaScreen() {

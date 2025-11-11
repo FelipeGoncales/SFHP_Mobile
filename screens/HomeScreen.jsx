@@ -56,40 +56,28 @@ function HomeScreen() {
 
                 <Text style={styles.textTitleConsulta}>Consulta atual</Text>
 
-                {
-                    consultas.length > 0 ? (
-                        consultas.filter(consulta => consulta.situacao !== "Alta recebida").length > 0 ? (
-                            consultas
-                                .filter(consulta => consulta.situacao !== "Alta recebida")
-                                .map((consulta, index) => (
-                                    <CardConsultaAtual key={index} consulta={consulta} />
-                                ))
-                            ) : (
-                                <Text style={styles.consultNofFound}>Nenhuma consulta encontrada.</Text>
-                            )
-                    ) : (
-                        <Text style={styles.consultNofFound}>Nenhuma consulta encontrada.</Text>
-                    )
-                }
+                {consultas && consultas.filter(consulta => consulta?.situacao !== "Alta recebida").length > 0 ? (
+                    consultas
+                        .filter(consulta => consulta?.situacao !== "Alta recebida")
+                        .map((consulta, index) => (
+                            <CardConsultaAtual key={index} consulta={consulta} />
+                        ))
+                ) : (
+                    <Text style={styles.consultNofFound}>Nenhuma consulta encontrada.</Text>
+                )}
 
                 <Text style={styles.textTitleConsulta}>Histórico de consultas</Text>
 
                 <View style={styles.containerCardConsulta}>
-                    {
-                        consultas.length > 0 ? (
-                            consultas.filter(consulta => consulta.situacao === "Alta recebida").length > 0 ? (
-                                consultas
-                                    .filter(consulta => consulta.situacao === "Alta recebida")
-                                    .map((consulta, index) => (
-                                        <CardConsulta key={index} consulta={consulta} />
-                                    ))
-                            ) : (
-                                <Text style={styles.consultNofFound}>Nenhuma consulta encontrada.</Text>
-                            )
-                        ) : (
-                            <Text style={styles.consultNofFound}>Nenhuma consulta encontrada.</Text>
-                        )
-                    }
+                    {consultas && consultas.filter(consulta => consulta?.situacao === "Alta recebida").length > 0 ? (
+                        consultas
+                            .filter(consulta => consulta?.situacao === "Alta recebida")
+                            .map((consulta, index) => (
+                                <CardConsulta key={index} consulta={consulta} />
+                            ))
+                    ) : (
+                        <Text style={styles.consultNofFound}>Nenhuma consulta encontrada.</Text>
+                    )}
                 </View>
             </View>
         </ScrollView>

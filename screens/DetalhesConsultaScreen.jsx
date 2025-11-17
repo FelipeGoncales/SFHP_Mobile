@@ -9,23 +9,25 @@ function DetalhesConsultaScreen() {
     const navigation = useNavigation();
 
     return (
-        <ScrollView>
-            <View style={styles.container}>
-                {/* Botão de voltar */}
-                <TouchableOpacity style={styles.Return} onPress={navigation.goBack}>
-                    <Image
-                        source={require("../assets/seta-esquerda.png")}
-                        style={styles.ReturnIcon}
-                    />
-                    <Text style={styles.ReturnText}>Detalhes da Consulta</Text>
-                </TouchableOpacity>
+        <View style={styles.container}>
+            {/* Botão de voltar */}
+            <TouchableOpacity style={styles.Return} onPress={navigation.goBack}>
+                <Image
+                    source={require("../assets/seta-esquerda.png")}
+                    style={styles.ReturnIcon}
+                />
+                <Text style={styles.ReturnText}>Detalhes da Consulta</Text>
+            </TouchableOpacity>
 
-                {/* Card principal */}
-                <CardDetalhesConsulta />
+            <ScrollView>
+                <View style={styles.containerCards}>
+                    {/* Card principal */}
+                    <CardDetalhesConsulta />
 
-                <CardDiagnostico />
-            </View>
-        </ScrollView>
+                    <CardDiagnostico />
+                </View>
+            </ScrollView>
+        </View>
     );
 }
 
@@ -33,12 +35,14 @@ export default DetalhesConsultaScreen;
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        paddingTop: 34,
-        paddingBottom: 70,
+        paddingTop: 54,
         gap: 20,
+        height: "100%",
     },
-
+    containerCards: {
+        gap: 15,
+        paddingBottom: 25,
+    },
     Return: {
         flexDirection: "row",
         alignItems: "center",

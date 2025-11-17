@@ -231,11 +231,13 @@ export default FormProfile;
 const styles = StyleSheet.create({
     containerForm: {
         backgroundColor: Colors.white,
-        margin: 25,
+        width: '90%',
+        alignSelf: 'center',
         boxSizing: "border-box",
         borderRadius: 15,
         alignItems: "center",
         paddingVertical: 30,
+        marginBottom: 25
     },
     header: {
         flexDirection: "row",

@@ -37,13 +37,14 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: colors.gray200,
         height: '100%',
+        paddingTop: 45,
+        gap: 12
     },
     header: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'flex-start',
         paddingHorizontal: 20,
-        paddingTop: 30,
     },
     title: {
         fontSize: 22,

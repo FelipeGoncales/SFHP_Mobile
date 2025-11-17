@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         paddingVertical: 30,
         paddingHorizontal: 25,
-        height: 250
+        height: 250,
     },
 
     containerPai: {
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         paddingVertical: 30,
         paddingHorizontal: 25,
-        height: 250
+        height: 250,
     },
 
     containerNotFound: {

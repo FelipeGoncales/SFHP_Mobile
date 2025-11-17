@@ -3,6 +3,7 @@ import { View, Text, Image, StyleSheet, TouchableOpacity, ScrollView } from "rea
 import { useNavigation } from "@react-navigation/native";
 import colors from "../design/colors";
 import CardDetalhesConsulta from "../components/CardDetalhesConsulta";
+import CardDiagnostico from "../components/CardDiagnostico";
 
 function DetalhesConsultaScreen() {
     const navigation = useNavigation();
@@ -21,6 +22,8 @@ function DetalhesConsultaScreen() {
 
                 {/* Card principal */}
                 <CardDetalhesConsulta />
+
+                <CardDiagnostico />
             </View>
         </ScrollView>
     );
@@ -32,6 +35,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingTop: 34,
+        paddingBottom: 70,
         gap: 20,
     },
 
@@ -49,7 +53,7 @@ const styles = StyleSheet.create({
     },
 
     ReturnText: {
-        fontSize: 26,
+        fontSize: 22,
         color: colors.blueDark,
         fontWeight: "bold",
     },

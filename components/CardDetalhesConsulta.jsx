@@ -19,13 +19,31 @@ export default function CardDetalhesConsulta() {
 
             {/* Timeline */}
             <View style={styles.timeline}>
-                <View style={[styles.circle, styles.circleActive]} />
+                <View style={styles.containerCircle}>
+                    <Text style={styles.textEtapaRight}>Recepção</Text>
+                    <View style={[styles.circle, styles.circleActive]} />
+                </View>
+
                 <View style={[styles.line, styles.lineActive]} />
-                <View style={styles.circle} />
+
+                <View style={styles.containerCircle}>
+                    <Text style={styles.textEtapaLeft}>Triagem</Text>
+                    <View style={styles.circle} />
+                </View>
+
                 <View style={styles.line} />
-                <View style={styles.circle} />
+
+                <View style={styles.containerCircle}>
+                    <Text style={styles.textEtapaRight}>Consulta</Text>
+                    <View style={styles.circle} />
+                </View>
+
                 <View style={styles.line} />
-                <View style={styles.circle} />
+
+                <View style={styles.containerCircle}>
+                    <Text style={styles.textEtapaLeft}>Alta</Text>
+                    <View style={styles.circle} />
+                </View>
             </View>
 
             {/* Rodapé */}
@@ -163,4 +181,22 @@ const styles = StyleSheet.create({
         resizeMode: "contain",
         tintColor: colors.black,
     },
+
+    containerCircle: {
+        position: "relative",
+    },
+
+    textEtapaRight: {
+        position: "absolute",
+        left: 40,
+        fontSize: 16,
+        fontWeight: "medium",
+    },
+
+    textEtapaLeft: {
+        position: "absolute",
+        right: 40,
+        fontSize: 16,
+        fontWeight: "medium",
+    }
 });

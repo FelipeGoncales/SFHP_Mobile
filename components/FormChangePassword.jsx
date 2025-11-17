@@ -100,12 +100,14 @@ function FormRecSenha() {
                     onChangeText={setPassword}
                     secureTextEntry={!showPassword}
                 />
-                <TouchableOpacity onPress={onShowPassword}>
-                    <Image
-                        style={styles.showPassword}
-                        source={showPassword ? eyeSlash : eye}
-                    />
-                </TouchableOpacity>
+                <View style={styles.divShowPassword}>
+                    <TouchableOpacity onPress={onShowPassword}>
+                        <Image
+                            style={styles.showPassword}
+                            source={showPassword ? eyeSlash : eye}
+                        />
+                    </TouchableOpacity>
+                </View>
             </View>
 
             <View style={styles.inputPasswordView}>
@@ -116,12 +118,14 @@ function FormRecSenha() {
                     onChangeText={setConfirmPassword}
                     secureTextEntry={!showConfirmPassword}
                 />
-                <TouchableOpacity onPress={onShowConfirmPassword}>
-                    <Image
-                        style={styles.showPassword}
-                        source={showConfirmPassword ? eyeSlash : eye}
-                    />
-                </TouchableOpacity>
+                <View style={styles.divShowPassword}>
+                    <TouchableOpacity onPress={onShowConfirmPassword}>
+                        <Image
+                            style={styles.showPassword}
+                            source={showConfirmPassword ? eyeSlash : eye}
+                        />
+                    </TouchableOpacity>
+                </View>
             </View>
 
             <TouchableOpacity style={styles.btn} onPress={onHandleSubmit}>
@@ -185,16 +189,22 @@ const styles = StyleSheet.create({
     btnTextCancelar: {
         color: colors.blueDark,
         fontWeight: 700,
-    },inputPasswordView: {
+    },
+    inputPasswordView: {
         width: '100%',
         position: "relative"
+    },
+    divShowPassword: {
+        position: "absolute",
+        width: "100%",
     },
     showPassword: {
         width: 25,
         height: 25,
         position: "absolute",
         right: 15,
-        transform: "translateY('-51%')"
+        transform: [{ translateY: 12.5 }],
+        zIndex: 99999
     },
 });
 

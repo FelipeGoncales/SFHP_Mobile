@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
         fontWeight: "500",
     },
     textBtnSair: {
+        paddingLeft: 10,
         color: colors.redBase,
         fontSize: 18,
         fontWeight: "500",

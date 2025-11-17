@@ -17,13 +17,13 @@ function ProfileScreen() {
     return (
         <View style={styles.container}>
 
-            <View style={styles.header}>
-                <TouchableOpacity style={styles.btnGoBack} onPress={redirectHome}>
-                    <Image source={require('../assets/seta-esquerda.png')} style={styles.imgSetaEsquerda}></Image>
-                </TouchableOpacity>
+            <TouchableOpacity style={styles.btnGoBack} onPress={redirectHome}>
+                <View style={styles.header}>
+                        <Image source={require('../assets/seta-esquerda.png')} style={styles.imgSetaEsquerda}></Image>
 
-                <Text style={styles.title}>Dados do paciente</Text>
-            </View>
+                    <Text style={styles.title}>Dados do paciente</Text>
+                </View>
+            </TouchableOpacity>
 
             <FormProfile />
 

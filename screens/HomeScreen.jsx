@@ -1,5 +1,15 @@
 import { useContext, useEffect, useState } from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, Alert, RefreshControl} from 'react-native';
+import {
+    View,
+    Text,
+    StyleSheet,
+    TouchableOpacity,
+    ScrollView,
+    Image,
+    Alert,
+    RefreshControl,
+    Dimensions, TouchableWithoutFeedback
+} from 'react-native';
 import { TokenContext } from '../context/tokenContext';
 import urlAPI from '../config/urlAPI';
 import { useNavigation } from '@react-navigation/native';
@@ -10,6 +20,7 @@ import CardConsultaAtual from "../components/CardConsultaAtual";
 import ModalBarraLateral from "../components/ModalBarraLateral";
 
 function HomeScreen() {
+
     // Variável state do nome
     const [consultas, setConsultas] = useState([]);
 
@@ -82,7 +93,13 @@ function HomeScreen() {
                 <Header setShowModal={setShowModal} showModal={showModal} />
 
                 {
-                    showModal ? (<ModalBarraLateral setShowModal={setShowModal} />) : null
+                    showModal ? (
+                        <TouchableWithoutFeedback onPress={() => setShowModal(false)} >
+                            <View style={styles.containerModal}>
+                                <ModalBarraLateral setShowModal={setShowModal} />
+                            </View>
+                        </TouchableWithoutFeedback>
+                    ) : null
                 }
 
                 <Text style={styles.textTitleConsulta}>Consulta atual</Text>
@@ -117,12 +134,23 @@ function HomeScreen() {
 
 export default HomeScreen;
 
+// Width e height da tela
+const { width, height } = Dimensions.get("window");
+
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'column',
         alignItems: 'flex-start',
         justifyContent: 'center',
         gap: 20,
+    },
+    containerModal: {
+        height: height,
+        width: width,
+        position: "absolute",
+        top: 0,
+        left: 0,
+        zIndex: 999,
     },
     btnLogout: {
         padding: 10,

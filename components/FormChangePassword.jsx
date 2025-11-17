@@ -11,71 +11,77 @@ import eye from "../assets/eye.png";
 
 function FormRecSenha() {
 
+    // Estados locais para armazenar a nova senha e a confirmação da senha.
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
+    // Estados que controlam a exibição da senha (mostrar/ocultar).
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+    // Hook de navegação (React Navigation).
     const navigation = useNavigation();
 
-    // Variáveis do context
+    // Importa funções do contexto para manipular o email e o CPF do paciente.
     const { setEmailRecSenha } = useContext(EmailRecSenhaContext);
     const { cpfPaciente, setCpfPaciente } = useContext(CpfPacienteContext);
 
-    // Função para voltar
     function voltarLogin() {
-        // Limpa os valores do email e do cpf
+        // Limpa o email e o CPF armazenados no contexto.
         setEmailRecSenha('');
         setCpfPaciente('');
 
+        // Volta para a tela de login.
         return navigation.navigate('Login')
     }
 
+    // Alterna entre mostrar ou ocultar o campo de senha.
     function onShowPassword() {
         setShowPassword(!showPassword);
     }
 
+    // Alterna entre mostrar ou ocultar o campo de confirmação de senha.
     function onShowConfirmPassword() {
         setShowConfirmPassword(!showConfirmPassword);
     }
 
-    // Função para envio do formulário
+    // Função acionada ao enviar o formulário para alterar a senha.
     async function onHandleSubmit() {
-        // Retorna caso não tenha informado o código
+        // Verifica se ambos os campos foram preenchidos.
         if (!password || !confirmPassword) {
-            return Alert.alert('Informe ambas as senhas');
+            return Alert.alert('Informe as senhas!');
         }
 
         try {
-            // Gera o código de verificação
+            // Requisição para a API realizar a alteração de senha.
             const response = await fetch(`${urlAPI}/alterar_senha?cpf=${getNumber(cpfPaciente)}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
+                // Envia a nova senha e a confirmação no corpo da requisição.
                 body: JSON.stringify({
                     "senha": password,
                     "confirmarSenha": confirmPassword
                 })
             });
 
-            // Obtém a resposta
+            // Converte a resposta da API em JSON.
             const data = await response.json();
 
             if (response.ok) {
-                // Exibe mensagem de sucesso
+                // Exibe mensagem de sucesso retornada pelo backend.
                 Alert.alert(data.success);
-
-                // Navega para trocar a senha
+                // Redireciona de volta para a tela de login.
                 navigation.navigate("Login");
             } else {
-                // Alerta o erro
+                // Exibe o erro retornado pela API.
                 Alert.alert(data.error);
             }
+
         } catch (err) {
+            // Captura erros inesperados.
             console.log(err)
-            // Erro inesperado
             Alert.alert("Erro", "Não foi possível conectar ao servidor");
         }
     }

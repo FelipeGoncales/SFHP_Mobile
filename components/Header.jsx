@@ -3,6 +3,9 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import urlAPI from "../config/urlAPI";
 import colors from "../design/colors";
 
+// Componente funcional Header que recebe duas props:
+// - setShowModal (função para alterar o estado do modal);
+// - showModal (booleano que indica se o modal está aberto ou não).
 function Header({setShowModal, showModal}) {
     return (
         <View style={styles.containerPai}>
@@ -24,6 +27,7 @@ function Header({setShowModal, showModal}) {
     )
 }
 
+// Exporta o componente para ser usado em outras partes do aplicativo.
 export default Header;
 
 const styles = StyleSheet.create({

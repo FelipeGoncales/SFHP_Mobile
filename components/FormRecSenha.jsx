@@ -9,49 +9,53 @@ import { getNumber } from "../utils/utils";
 
 function FormRecSenha() {
 
+    // Definindo o estado local para armazenar o código que o usuário irá inserir.
     const [codigo, setCodigo] = useState("");
 
+    // Hook do React Navigation para navegação entre telas.
     const navigation = useNavigation();
 
-    // Variáveis do context
+    // Contextos utilizados para chamar o email e o CPF do paciente.
     const { emailRecSenha, setEmailRecSenha } = useContext(EmailRecSenhaContext);
     const { cpfPaciente, setCpfPaciente } = useContext(CpfPacienteContext);
 
-    // Função para voltar
+    // Função para voltar à tela de login, limpando os valores.
     function voltarLogin() {
-        // Limpa os valores do email e do cpf
+        // Limpa o estado do email e do CPF no contexto, ou seja, reseta esses dados.
         setEmailRecSenha('');
         setCpfPaciente('');
 
+        // Navega de volta para a tela de Login.
         return navigation.navigate('Login')
     }
 
-    // Função para envio do formulário
+    // Função que é chamada quando o formulário de recuperação de senha é submetido.
     async function onHandleSubmit() {
-        // Retorna caso não tenha informado o código
+        // Verifica se o código foi preenchido. Se não, exibe um alerta para o paciente.
         if (!codigo) {
             return Alert.alert('Informe o código!');
         }
 
         try {
-            // Gera o código de verificação
+            // Faz a requisição para o backend, validando o código informado.
             const response = await fetch(`${urlAPI}/validar_codigo?cpf=${getNumber(cpfPaciente)}&codigo=${codigo}`, {
                 method: "POST",
             });
 
-            // Obtém a resposta
+            // Converte a resposta da API para JSON.
             const data = await response.json();
 
+            // Se a resposta for bem-sucedida (código de status HTTP 2xx), navega para a tela de alteração de senha.
             if (response.ok) {
-                // Navega para trocar a senha
                 navigation.navigate("ChangePassword");
             } else {
-                // Alerta o erro
+                // Se a resposta não for bem-sucedida, exibe o erro retornado pela API.
                 Alert.alert(data.error);
             }
+
         } catch (err) {
+            // Caso haja um erro inesperado (como problemas de conexão), exibe uma mensagem de erro.
             console.log(err)
-            // Erro inesperado
             Alert.alert("Erro", "Não foi possível conectar ao servidor");
         }
     }

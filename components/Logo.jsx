@@ -10,6 +10,7 @@ function Logo() {
     )
 }
 
+// Exporta o componente para uso em outras partes do aplicativo.
 export default Logo;
 
 const styles = StyleSheet.create({

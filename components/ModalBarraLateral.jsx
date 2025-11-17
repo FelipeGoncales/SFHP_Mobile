@@ -6,33 +6,31 @@ import {TokenContext} from "../context/tokenContext";
 
 function ModalBarraLateral({ setShowModal }) {
 
-    // Use navigation
+    // Hook de navegação do React Navigation.
     const navigation = useNavigation();
 
-    // Obtém o token do context
+    // Acessa o token de autenticação do contexto.
     const { token, setToken } = useContext(TokenContext);
 
-    // Redireciona para perfil
     function redirectPerfil() {
-        // Esconde o modal
+        // Esconde o modal lateral.
         setShowModal(false);
 
-        // Redireciona para a página do perfil
+        // Navega para a tela de perfil.
         return navigation.navigate('Profile');
     }
 
-    // Logout
     function logout() {
-        // Limpa o token
+        // Limpa o token de autenticação (deslogando o paciente).
         setToken('');
 
-        // Exibe mensagem de sucesso
+        // Exibe uma mensagem de sucesso.
         Alert.alert('Você saiu da sua conta com sucesso!');
 
-        // Esconde o modal
+        // Esconde o modal lateral.
         setShowModal(false);
 
-        // Redireciona para login
+        // Redireciona para a tela de login.
         return navigation.navigate('Login');
     }
 

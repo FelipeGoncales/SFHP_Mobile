@@ -9,7 +9,7 @@ import { CpfPacienteContext } from "../context/CpfPacienteContext";
 import { formatCPF } from "../utils/masks";
 import { getNumber } from "../utils/utils";
 
-// Import das imagens fixas.
+// Imagens fixas.
 import eye from '../assets/eye.png';
 import eyeSlash from '../assets/eye-slash.png';
 
@@ -42,7 +42,6 @@ function FormLogin() {
     // Função, com operações assíncronas (que levam tempo), para envio do formulário.
     async function handleSubmit() {
 
-        // Lida com erros que podem ocorrer durante a execução do código.
         try {
             // Inicia a requisição de rede (fetch) de forma assíncrona (await).
             // ${urlAPI}/login: Endereço para a rota de login no servidor.
@@ -87,7 +86,6 @@ function FormLogin() {
             return Alert.alert('Informe o CPF!');
         }
 
-        // Tenta executar a requisição à API.
         try {
             // Gera o código de verificação.
             const response = await fetch(`${urlAPI}/gerar_codigo?cpf=${getNumber(CPF)}`, {

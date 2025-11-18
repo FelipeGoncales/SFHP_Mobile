@@ -5,25 +5,25 @@ import colors from "../design/colors";
 import {useNavigation} from "@react-navigation/native";
 
 function CardConsulta({ consulta }) {
-    // Variável useState da data
+    // Guarda a data da consulta.
     const [date, setDate] = useState(new Date());
 
-    // Use navigation
+    // Hook para navegação entre telas.
     const navigation = useNavigation();
 
-    // Obtém o setIdConsulta do context
+    // Obtém o ID da consulta do contexto global.
     const { setIdConsulta } = useContext(IdConsultaContext);
 
-    // Atualiza o valor da data
+    // Atualiza a data sempre que a consulta recebida mudar.
     useEffect(() => {
         setDate(new Date(consulta.data_entrada));
     }, [consulta]);
 
-    // Função para redirecionar a página de ver mais detalhes
+    // Função chamada quando usuário clica no botão 'ver detalhes'.
     function showMoreDetails(idConsulta) {
-        // Salva o id da consulta
+        // Armazena o ID da consulta.
         setIdConsulta(idConsulta);
-        // Redireciona para a tela de detalhes da consulta
+        // Redireciona para a página de detalhes.
         return navigation.navigate('DetalhesConsulta');
     }
 

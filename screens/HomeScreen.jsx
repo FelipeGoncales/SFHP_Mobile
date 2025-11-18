@@ -8,7 +8,7 @@ import {
     Image,
     Alert,
     RefreshControl,
-    Dimensions, TouchableWithoutFeedback
+    Dimensions, TouchableWithoutFeedback, ActivityIndicator
 } from 'react-native';
 import { TokenContext } from '../context/tokenContext';
 import urlAPI from '../config/urlAPI';
@@ -34,7 +34,7 @@ function HomeScreen() {
     const { token } = useContext(TokenContext);
 
     // Controle do recarregamento da página
-    const [refreshing, setRefreshing] = useState(false);
+    const [refreshing, setRefreshing] = useState(true);
 
     // useEffect para buscar dados ao carregar a página
     useEffect(() => {
@@ -57,6 +57,8 @@ function HomeScreen() {
         };
 
         fetchGetConsultas();
+
+        setRefreshing(false);
     }, [token, navigation]);
 
     // Lógica para permitir o recarregamento
@@ -89,6 +91,15 @@ function HomeScreen() {
                 />
             }
         >
+            {
+                refreshing ? (
+                    <View style={styles.loadingScreen}>
+                        <ActivityIndicator size="large" color={colors.blueDark} />
+                    </View>
+                ) : null
+            }
+
+
             <View style={styles.container}>
                 <Header setShowModal={setShowModal} showModal={showModal} />
 
@@ -143,6 +154,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         justifyContent: 'center',
         gap: 20,
+        paddingBottom: 20
     },
     containerModal: {
         height: height,
@@ -166,7 +178,7 @@ const styles = StyleSheet.create({
         width: '100%',
         flexDirection: 'column',
         justifyContent: 'center',
-        gap: 20,
+        gap: 10,
     },
     textTitleConsulta: {
         color: colors.blueDark,
@@ -177,5 +189,16 @@ const styles = StyleSheet.create({
     consultNofFound: {
         paddingHorizontal: 22,
         fontSize: 16,
+    },
+    loadingScreen: {
+        position: "absolute",
+        height: height,
+        width: width,
+        top: 0,
+        left: 0,
+        zIndex: 9999999,
+        backgroundColor: colors.white,
+        alignItems: "center",
+        justifyContent: "center",
     }
 })

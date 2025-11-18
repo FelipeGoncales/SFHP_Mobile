@@ -42,7 +42,7 @@ export default function CardConsultaAtual({ consulta }) {
                     source={require("../assets/icone-calendario.png")}
                     style={styles.imgCalendario}
                 />
-                <Text style={styles.date}>{date.toLocaleDateString()}</Text>
+                <Text style={styles.date}>{date.toLocaleDateString("pt-BR")}</Text>
             </View>
 
             {/* Barra de progresso */}

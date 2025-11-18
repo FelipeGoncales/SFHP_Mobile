@@ -1,41 +1,46 @@
-import React, { useContext, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {View, Text, Image, StyleSheet, TouchableOpacity} from "react-native";
 import urlAPI from "../config/urlAPI";
 import colors from "../design/colors";
 
 // Exibe um layout estático (com dados fictícios), utilizado apenas para desenvolvimento visual e testes de design.
-function CardDiagnostico() {
+function CardDiagnostico({ consulta, diagnostico }) {
     return (
-        <View style={styles.containerPai}>
+        <View style={consulta.situacao_vetor < 5 ? styles.containerPaiNotFound : styles.containerPai}>
+            {
+                consulta.situacao_vetor < 5 ? (
+                    <View style={styles.containerNotFound}>
+                        <Image style={styles.image} source={require("../assets/lock.png")} />
+                        <Text style={styles.title}>Diagnóstico pendente</Text>
+                    </View>
+                ) : (
+                <View style={styles.card}>
+                    <View style={styles.container}>
+                        <Text style={styles.topic}>Diagnóstico</Text>
+                        <Text>{diagnostico.diagnostico ? diagnostico.diagnostico : null}</Text>
+                    </View>
 
-            {/*<View style={styles.containerNotFound}>*/}
-            {/*    <Image style={styles.image} source={require("../assets/lock.png")} />*/}
-            {/*    <Text style={styles.title}>Diagnóstico pendente</Text>*/}
-            {/*</View>*/}
+                    <View style={styles.container}>
+                        <Text style={styles.topic}>Receita</Text>
+                        <Text>{diagnostico.receita ? diagnostico.receita : null}</Text>
+                    </View>
 
-            <View style={styles.card}>
-                <View style={styles.container}>
-                    <Text style={styles.topic}>Diagnóstico</Text>
-                    <Text>Virose</Text>
+                    <View style={styles.medicoView}>
+                        <Text style={styles.receitadoPor}>Receitado por</Text>
+
+                        <View style={styles.containerMedico}>
+                            <Image
+                                source={require("../assets/icone-user-simples.png")}
+                                style={styles.UserIcon}
+                            />
+
+                            {/* Pega apenas o primeiro nome do médico */}
+                            <Text style={styles.doutor}>DR. {consulta.medico ? consulta.medico.split(' ')[0] : null}</Text>
+                        </View>
+                    </View>
                 </View>
-
-                <View style={styles.container}>
-                    <Text style={styles.topic}>Receita</Text>
-                    <Text>Hidratação</Text>
-                </View>
-
-                <View style={styles.medicoView}>
-                    <Text style={styles.receitadoPor}>Receitado por</Text>
-
-                    <Text style={styles.containerMedico}>
-                        <Image
-                            source={require("../assets/icone-user-simples.png")}
-                            style={styles.UserIcon}
-                        />
-                        <Text style={styles.doutor}>Dr. Thomás</Text>
-                    </Text>
-                </View>
-            </View>
+                )
+            }
 
         </View>
     )
@@ -95,16 +100,17 @@ const styles = StyleSheet.create({
     },
 
     UserIcon: {
-        width: 30,
-        height: 30,
+        width: 20,
+        height: 20,
         resizeMode: "contain",
-        tintColor: colors.black,
     },
 
     medicoView: {
         position: "absolute",
         top: 0,
-        right: 0
+        right: 0,
+        alignItems: "flex-end",
+        justifyContent: "center",
     },
 
     receitadoPor: {
@@ -113,9 +119,10 @@ const styles = StyleSheet.create({
     },
 
     containerMedico: {
-        alignItems: "flex-start",
-        justifyContent: "flex-start",
-        gap: 14
+        alignItems: "center",
+        justifyContent: "center",
+        flexDirection: "row",
+        gap: 5
     },
 
     doutor: {

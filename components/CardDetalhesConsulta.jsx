@@ -1,50 +1,52 @@
-import React from "react";
+import React, {useContext, useEffect} from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 import colors from "../design/colors";
+import {IdConsultaContext} from "../context/IdConsultaContext";
 
 // Exibe um layout estático (com dados fictícios), utilizado apenas para desenvolvimento visual e testes de design.
 // Exporta o componente para ser reutilizado em outras telas, permitindo futura integração com dados reais vindos da API.
-export default function CardDetalhesConsulta() {
+export default function CardDetalhesConsulta({ consulta }) {
+
     return (
         <View style={styles.containerPai}>
             {/* Título e status lado a lado */}
             <View style={styles.containerTitle}>
                 {/* bloco esquerdo: título + data */}
                 <View style={styles.leftBlock}>
-                    <Text style={styles.title}>Aguardando Triagem</Text>
-                    <Text style={styles.date}>15/09/2025</Text>
+                    <Text style={styles.title}>{consulta.situacao}</Text>
+                    <Text style={styles.date}>{new Date(consulta.data_entrada).toLocaleDateString("pt-BR")}</Text>
                 </View>
 
                 {/* bloco direito: tag de status */}
-                <Text style={styles.description}>Espera da triagem</Text>
+                <Text style={consulta.situacao_vetor === 5 ? styles.descriptionConcluded : styles.description}>{ consulta.situacao_vetor === 5 ? "Concluída" : "Em andamento" }</Text>
             </View>
 
             {/* Timeline */}
             <View style={styles.timeline}>
                 <View style={styles.containerCircle}>
                     <Text style={styles.textEtapaRight}>Recepção</Text>
-                    <View style={[styles.circle, styles.circleActive]} />
+                    <View style={[styles.circle, consulta.situacao_vetor >= 1 ? styles.circleActive : null]} />
                 </View>
 
-                <View style={[styles.line, styles.lineActive]} />
+                <View style={[styles.line, consulta.situacao_vetor >= 1 ? styles.circleActive : null]} />
 
                 <View style={styles.containerCircle}>
                     <Text style={styles.textEtapaLeft}>Triagem</Text>
-                    <View style={styles.circle} />
+                    <View style={[styles.circle, consulta.situacao_vetor >= 2 ? styles.circleActive : null]} />
                 </View>
 
-                <View style={styles.line} />
+                <View style={[styles.line, consulta.situacao_vetor >= 3 ? styles.circleActive : null]} />
 
                 <View style={styles.containerCircle}>
                     <Text style={styles.textEtapaRight}>Consulta</Text>
-                    <View style={styles.circle} />
+                    <View style={[styles.circle, consulta.situacao_vetor >= 4 ? styles.circleActive : null]} />
                 </View>
 
-                <View style={styles.line} />
+                <View style={[styles.line, consulta.situacao_vetor >= 5 ? styles.circleActive : null]} />
 
                 <View style={styles.containerCircle}>
                     <Text style={styles.textEtapaLeft}>Alta</Text>
-                    <View style={styles.circle} />
+                    <View style={[styles.circle, consulta.situacao_vetor >= 5 ? styles.circleActive : null]} />
                 </View>
             </View>
 
@@ -116,6 +118,15 @@ const styles = StyleSheet.create({
     description: {
         backgroundColor: colors.yellow_fundo,
         color: colors.yellowProtocol,
+        paddingHorizontal: 10,
+        paddingVertical: 6,
+        borderRadius: 25,
+        fontSize: 14,
+    },
+
+    descriptionConcluded: {
+        backgroundColor: colors.greenLight,
+        color: colors.greenDark,
         paddingHorizontal: 10,
         paddingVertical: 6,
         borderRadius: 25,

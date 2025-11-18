@@ -31,13 +31,13 @@ function CardConsulta({ consulta }) {
         <View style={styles.containerPai}>
 
             <View style={styles.containerTitle}>
-                <Text style={styles.title}>Consulta concluída</Text>
-                <Text style={styles.description}>Alta recebida</Text>
+                <Text style={styles.title}>Alta recebida</Text>
+                <Text style={styles.description}>Concluída</Text>
             </View>
 
             <View style={styles.containerDate}>
                 <Image source={require('../assets/icone-calendario.png')} style={styles.imgCalendario}></Image>
-                <Text style={styles.date}>{date.toLocaleDateString()}</Text>
+                <Text style={styles.date}>{date.toLocaleDateString("pt-BR")}</Text>
             </View>
 
             <View style={styles.containerMoreDetails}>
@@ -73,14 +73,13 @@ const styles = StyleSheet.create({
     containerDate: {
         flexDirection: 'row',
         alignItems: 'center',
-
     },
     title: {
         fontSize: 19,
         fontWeight: 'bold',
     },
     description: {
-        fontSize: 12,
+        fontSize: 14,
         backgroundColor: colors.greenLight,
         paddingHorizontal: 15,
         paddingVertical: 5,

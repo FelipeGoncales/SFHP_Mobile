@@ -23,7 +23,7 @@ export default function CardConsultaAtual({ consulta }) {
     function showMoreDetails(idConsulta) {
         // Armazena o ID da consulta.
         setIdConsulta(idConsulta);
-        // Redireciona para a página de detalhes.0,
+        // Redireciona para a página de detalhes.
         return navigation.navigate('DetalhesConsulta');
     }
 

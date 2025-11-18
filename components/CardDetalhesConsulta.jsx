@@ -2,6 +2,8 @@ import React from "react";
 import { View, Text, Image, StyleSheet } from "react-native";
 import colors from "../design/colors";
 
+// Exibe um layout estático (com dados fictícios), utilizado apenas para desenvolvimento visual e testes de design.
+// Exporta o componente para ser reutilizado em outras telas, permitindo futura integração com dados reais vindos da API.
 export default function CardDetalhesConsulta() {
     return (
         <View style={styles.containerPai}>

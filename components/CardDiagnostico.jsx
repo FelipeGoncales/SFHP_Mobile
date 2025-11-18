@@ -3,6 +3,7 @@ import {View, Text, Image, StyleSheet, TouchableOpacity} from "react-native";
 import urlAPI from "../config/urlAPI";
 import colors from "../design/colors";
 
+// Exibe um layout estático (com dados fictícios), utilizado apenas para desenvolvimento visual e testes de design.
 function CardDiagnostico() {
     return (
         <View style={styles.containerPai}>
@@ -40,6 +41,7 @@ function CardDiagnostico() {
     )
 }
 
+// Exporta o componente para ser reutilizado em outras telas, permitindo futura integração com dados reais vindos da API.
 export default CardDiagnostico;
 
 const styles = StyleSheet.create({

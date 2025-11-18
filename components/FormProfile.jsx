@@ -10,34 +10,38 @@ import { getNumber, formatNomeFixo } from "../utils/utils.js";
 
 function FormProfile() {
 
-    // CPF
+    // Guarda o CPF original.
     const [CPFfixo, setCPFfixo] = useState('');
+    // Guarda o CPF editável.
     const [CPF, setCPF] = useState('');
 
-    // Nome
+    // Guarda a versão original do nome.
     const [nomeFixo, setNomeFixo] = useState('');
+    // Guarda o nome editável.
     const [nome, setNome] = useState('');
 
-    // Email
+    // Armazena o email.
     const [email, setEmail] = useState('');
 
-    // SUS
+    // Armazena o número do SUS.
     const [sus, setSus] = useState('');
 
-    // Telefone
+    // Armazena o telefone.
     const [telefone, setTelefone] = useState('');
 
-    // Sexo
+    // Armazena o sexo.
     const [sexo, setSexo] = useState('');
 
-    // Data nascimento
+    // Armazena a data de nascimento.,
     const [dataNascimento, setDataNascimento] = useState('');
 
-    // Obtém a função para armazenar o token (chave de acesso) em um estado global (Context) após um login bem-sucedido.
+    // Pega o token armazenado de forma global (Context API).
     const { token } = useContext(TokenContext);
 
-    // useEffect para carregar dados ao abrir a página
+    // 'useEffect' para carregar dados ao abrir a página.
     useEffect(() => {
+        
+        // Função assíncrona que busca os dados do usuário na API.
         const fetchGetDataUser = async () => {
             try {
                 const response = await fetch(`${UrlAPI}/cadastro`, {
@@ -45,83 +49,98 @@ function FormProfile() {
                         'Authorization': `Bearer ${token}`,
                     }
                 });
-
+                
+                // Converte resposta para JSON.
                 const data = await response.json();
 
                 if (response.ok) {
-                    // Dado do usuário
+                    // Dados retornados da API.
                     const user = data.user;
 
-                    // CPF
+                    // Formata e atualiza o CPF.
                     formatCPF(user.cpf, setCPF);
                     formatCPF(user.cpf, setCPFfixo);
 
-                    // Email
+                    // Atualiza o email.
                     setEmail(user.email);
 
-                    // Nome
+                    // Atualiza o nome.
                     setNome(user.nome);
+                    // Formata o nome, exibindo cortado (com limite).
                     setNomeFixo(formatNomeFixo(user.nome, 18));
 
-                    // Telefone
+                    // Formata e atualiza o telefone.
                     formatTelefone(user.telefone, setTelefone);
-                    // Data nascimento
+                    
+                    // Converte para formato brasileiro e atualiza a data.
                     setDataNascimento(
                         new Date(user.data_nascimento).toLocaleDateString("pt-BR")
                     );
-                    // SUS
+                    
+                    // Atualiza o número do SUS.
                     setSus(user.coren_crm_sus)
-                    // Sexo
+                    
+                    // Atualiza o sexo.
                     setSexo(user.sexo)
+                    
                 } else {
+                    // Exibe erro vindo da API.
                     Alert.alert(data.error);
                 }
 
             } catch (error) {
+                // Caso ocorra erro de conexão ou servidor.
                 console.error("Erro ao buscar dados:", error);
                 Alert.alert("Erro ao carregar dados.");
             }
         };
 
+        // A função de busca é chamada quando o usuário abre a página em que está o FormProfile.
         fetchGetDataUser();
+
+    // Executa sempre que o token mudar (após login).
     }, [token]);
 
-    // Envio do formulário
+    // Envio do formulário.
     async function onHandleSubmit() {
-        // Formata a data de nascimento
+        // Formata a data de nascimento.
         const lista = dataNascimento.split('/')
         const dataFormatada = lista.reverse().join('-');
 
-        // Requisição PUT para edição do cadastro
+        // Envia dados atualizados para a API.
         const response = await fetch(`${UrlAPI}/cadastro`, {
-            method: "PUT",
+            method: "PUT", // Método de edição.
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`,
             },
+            // Transforma o objeto em texto.
             body: JSON.stringify({
                 email: email,
-                cpfAntigo: getNumber(CPFfixo),
-                cpfNovo: getNumber(CPF),
+                cpfAntigo: getNumber(CPFfixo), // Remove máscaras.
+                cpfNovo: getNumber(CPF), // Remove máscaras.
                 nome: nome,
-                telefone: getNumber(telefone),
+                telefone: getNumber(telefone), // Remove máscaras.
                 sexo: sexo,
                 nascimento: dataFormatada,
-                coren_crm_sus: getNumber(sus)
+                coren_crm_sus: getNumber(sus) // Remove máscaras.
             })
         });
-
+        
+        // Converte resposta da API.
         const data = await response.json();
 
+        // Caso a edição tenha sido bem-sucedida.
         if (response.ok) {
-            // Dado do usuário
+            // Exibe mensagem de sucesso.
             Alert.alert(data.success);
 
-            // Altera os novos valores de CPF e nome
+            // Atualiza os novos valores de CPF e nome.
             formatCPF(CPF, setCPFfixo);
-            // Salva o nome novo
             setNomeFixo(formatNomeFixo(nome, 18));
+            
         } else {
+            // Exibe mensagem de erro
             Alert.alert(data.error);
         }
     }

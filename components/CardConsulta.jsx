@@ -11,7 +11,7 @@ function CardConsulta({ consulta }) {
     // Hook para navegação entre telas.
     const navigation = useNavigation();
 
-    // Obtém o ID da consulta do contexto global.
+    // Obtém o ID da consulta no contexto global.
     const { setIdConsulta } = useContext(IdConsultaContext);
 
     // Atualiza a data sempre que a consulta recebida mudar.

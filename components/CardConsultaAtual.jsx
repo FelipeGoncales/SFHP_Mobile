@@ -30,9 +30,11 @@ export default function CardConsultaAtual({ consulta }) {
     return (
         <View style={styles.containerPai}>
 
-            {/* Cabeçalho */}
+            {/* Título + Situação */}
             <View style={styles.containerTitle}>
+                {/* Situação da consulta (exemplo: 'Consulta', 'Triagem'...) */}
                 <Text style={styles.title}>{consulta.situacao}</Text>
+                {/* Status fixo (essa tela SEMPRE mostra como "Em andamento") */}
                 <Text style={styles.description}>Em andamento</Text>
             </View>
 
@@ -46,52 +48,58 @@ export default function CardConsultaAtual({ consulta }) {
             </View>
 
             {/* Barra de progresso */}
-
             {
+                // Situação 1
                 consulta.situacao_vetor === 1 ? (
                     <View style={styles.progressoContainer}>
-                        <View style={styles.circuloActive} />
-                        <View style={styles.linhaActive} />
-                        <View style={styles.circulo} />
+                        <View style={styles.circuloActive} /> // 1 ativo
+                        <View style={styles.linhaActive} /> // Linha ativa
+                        <View style={styles.circulo} /> // 2 inativo
+                        <View style={styles.linha} /> 
+                        <View style={styles.circulo} /> // 3 inativo
                         <View style={styles.linha} />
-                        <View style={styles.circulo} />
-                        <View style={styles.linha} />
-                        <View style={styles.circulo} />
+                        <View style={styles.circulo} /> // 4 inativo
                     </View>
+                    
+                // Situação 2
                 ) : consulta.situacao_vetor === 2 ? (
                     <View style={styles.progressoContainer}>
-                        <View style={styles.circuloActive} />
+                        <View style={styles.circuloActive} /> // 1 ativo
                         <View style={styles.linhaActive} />
-                        <View style={styles.circuloActive} />
+                        <View style={styles.circuloActive} /> // 2 ativo
                         <View style={styles.linha} />
-                        <View style={styles.circulo} />
+                        <View style={styles.circulo} /> // 3 inativo
                         <View style={styles.linha} />
-                        <View style={styles.circulo} />
+                        <View style={styles.circulo} /> // 4 inativo
                     </View>
+
+                // Situação 3
                 ) : consulta.situacao_vetor === 3 ? (
                     <View style={styles.progressoContainer}>
-                        <View style={styles.circuloActive} />
+                        <View style={styles.circuloActive} /> // 1 ativo
                         <View style={styles.linhaActive} />
-                        <View style={styles.circuloActive} />
-                        <View style={styles.linhaActive} />
-                        <View style={styles.circulo} />
+                        <View style={styles.circuloActive} /> // 2 ativo
+                        <View style={styles.linhaActive} /> // Linha ativa
+                        <View style={styles.circulo} /> // 3 inativo
                         <View style={styles.linha} />
-                        <View style={styles.circulo} />
+                        <View style={styles.circulo} /> // 4 inativo
                     </View>
+
+                // Situação 4
                 ) : (
                     <View style={styles.progressoContainer}>
-                        <View style={styles.circuloActive} />
+                        <View style={styles.circuloActive} /> // 1 ativo
                         <View style={styles.linhaActive} />
-                        <View style={styles.circuloActive} />
+                        <View style={styles.circuloActive} /> // 2 ativo
                         <View style={styles.linhaActive} />
-                        <View style={styles.circuloActive} />
+                        <View style={styles.circuloActive} /> // 3 ativo
                         <View style={styles.linha} />
-                        <View style={styles.circulo} />
+                        <View style={styles.circulo} /> // 4 inativo
                     </View>
                 )
             }
-
-            {/* Botão */}
+            
+            {/* Botão para abrir detalhes */}
             <TouchableOpacity style={styles.button} onPress={() => showMoreDetails(consulta.id_consulta)}>
                 <Text style={styles.buttonText}>Ver mais detalhes</Text>
                 <Image source={require('../assets/seta-direita-branca.png')} style={styles.imgSeta}></Image>

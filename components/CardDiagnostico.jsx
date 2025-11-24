@@ -19,21 +19,21 @@ function CardDiagnostico({ consulta, diagnostico }) {
                 ) : (
                 // Caso contrário, o diagnóstico está liberado e é exibido
                 <View style={styles.card}>
-                    // Bloco do diagnóstico
+                    {/* Bloco do diagnóstico */}
                     <View style={styles.container}>
                         <Text style={styles.topic}>Diagnóstico</Text>
-                        // Só exibe o texto se existir para evitar erro
+                        {/* Só exibe o texto se existir para evitar erro */}
                         <Text>{diagnostico.diagnostico ? diagnostico.diagnostico : null}</Text>
                     </View>
 
-                    // Bloco da receita
+                    {/* Bloco da receita */}
                     <View style={styles.container}>
                         <Text style={styles.topic}>Receita</Text>
-                        // Só exibe o texto se existir para evitar erro
+                        {/* Só exibe o texto se existir para evitar erro */}
                         <Text>{diagnostico.receita ? diagnostico.receita : null}</Text>
                     </View>
 
-                    // Exibição do médico que receitou
+                    {/* Exibição do médico que receitou */}
                     <View style={styles.medicoView}>
                         <Text style={styles.receitadoPor}>Receitado por</Text>
 
@@ -43,7 +43,7 @@ function CardDiagnostico({ consulta, diagnostico }) {
                                 style={styles.UserIcon}
                             />
 
-                            // Exibe apenas o primeiro nome do médico usando split
+                            {/* Exibe apenas o primeiro nome do médico usando split */}
                             <Text style={styles.doutor}>DR. {consulta.medico ? consulta.medico.split(' ')[0] : null}</Text>
                         </View>
                     </View>

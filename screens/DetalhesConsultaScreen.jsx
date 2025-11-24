@@ -95,7 +95,9 @@ function DetalhesConsultaScreen() {
 
     return (
         <View style={styles.container}>
-            {/* Botão de voltar */}
+
+            <> </>
+
             <TouchableOpacity style={styles.Return} onPress={navigation.goBack}>
                 <Image
                     source={require("../assets/seta-esquerda.png")}
@@ -113,7 +115,9 @@ function DetalhesConsultaScreen() {
                 }
             >
                 <View style={styles.containerCards}>
-                    {/* Card principal */}
+
+                    <> </>
+
                     <CardDetalhesConsulta consulta={consulta} />
 
                     <CardDiagnostico diagnostico={diagnostico} consulta={consulta} />

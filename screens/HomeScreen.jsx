@@ -21,52 +21,28 @@ import ModalBarraLateral from "../components/ModalBarraLateral";
 
 function HomeScreen() {
 
-    // Variável state do nome
+    // Estado para armazenar a lista de consultas obtidas da API.
     const [consultas, setConsultas] = useState([]);
 
-    // Variável state para controle da modal
+    // Estado para controlar a visibilidade do modal.
     const [showModal, setShowModal] = useState(false);
 
-    // Hook useNavigation
+    // Hook para ter acesso ao objeto de navegação (usado para redirecionar).
     const navigation = useNavigation();
 
-    // Obtém o token do context
+    // Obtém o token de autenticação armazenado globalmente (Context API).
     const { token } = useContext(TokenContext);
 
-    // Controle do recarregamento da página
+    // Estado para controlar o indicador de carregamento (ActivityIndicator) e o RefreshControl.
     const [refreshing, setRefreshing] = useState(true);
 
-    // useEffect para buscar dados ao carregar a página
+    // Função assíncrona para buscar os dados das consultas na API.
     useEffect(() => {
-        // Fetch na URL da API
         const fetchGetConsultas = async () => {
-            if (!token) return navigation.navigate('Login'); // evita chamada antes de ter o token
-
-            const response = await fetch(`${urlAPI}/get_consultas?p=True`, {
-                method: "GET",
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                }
-            });
-
-            // Resposta da API
-            const data = await response.json();
-
-            // Atualiza a lista de consultas
-            setConsultas(data.consultas);
-        };
-
-        fetchGetConsultas();
-
-        setRefreshing(false);
-    }, [token, navigation]);
-
-    // Lógica para permitir o recarregamento
-    const onRefresh = async () => {
-        setRefreshing(true);
-        const fetchGetConsultas = async () => {
+            // Verifica se o token existe; se não, redireciona o usuário para a tela de Login.
             if (!token) return navigation.navigate('Login');
 
+            // Faz a requisição GET para a API, passando o token no header para autenticação.
             const response = await fetch(`${urlAPI}/get_consultas?p=True`, {
                 method: "GET",
                 headers: {
@@ -74,11 +50,46 @@ function HomeScreen() {
                 }
             });
 
+            // Converte a resposta da API para JSON.
             const data = await response.json();
+
+            // Atualiza o estado 'consultas' com a lista retornada pela API.
             setConsultas(data.consultas);
         };
 
+        fetchGetConsultas(); // Executa a busca de consultas.
+
+        // Desativa o indicador de loading inicial.
+        // Idealmente, deve ser movido para dentro de fetchGetConsultas após a resposta da API.
+        setRefreshing(false);
+    }, [token, navigation]); // Dependências: reexecuta se 'token' ou 'navigation' mudarem.
+
+    // Função acionada pelo 'RefreshControl' quando o usuário puxa a tela para baixo.
+    const onRefresh = async () => {
+        setRefreshing(true); // Ativa o indicador de recarregamento.
+
+        // Define uma função interna e assíncrona para buscar os dados da API.
+        const fetchGetConsultas = async () => {
+            // Verifica se o token de autenticação existe.
+            if (!token) return navigation.navigate('Login'); // Se não houver token, redireciona o usuário para a tela de Login e encerra a função.
+
+            // Realiza a requisição GET para buscar as consultas.
+            const response = await fetch(`${urlAPI}/get_consultas?p=True`, {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+
+            // Converte o corpo da resposta HTTP (JSON) em um objeto JavaScript.
+            const data = await response.json();
+            // Atualiza o estado das consultas com os dados recebidos da API.
+            setConsultas(data.consultas);
+        };
+
+        // Aguarda a execução completa da busca de dados.
         await fetchGetConsultas();
+        // Desativa o indicador de recarregamento, sinalizando que a operação terminou.
         setRefreshing(false);
     };
 

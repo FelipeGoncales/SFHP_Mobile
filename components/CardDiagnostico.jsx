@@ -5,6 +5,7 @@ import colors from "../design/colors";
 
 // Componente que recebe uma consulta e um diagnóstico como propriedades
 function CardDiagnostico({ consulta, diagnostico }) {
+
     return (
         // Container externo muda dependendo do diagnóstico estar liberado ou não
         <View style={consulta.situacao_vetor < 5 ? styles.containerPaiNotFound : styles.containerPai}>

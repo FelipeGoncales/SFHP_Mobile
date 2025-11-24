@@ -15,9 +15,6 @@ function Header({setShowModal, showModal}) {
             </View>
 
             <View style={styles.containerFilho}>
-                <TouchableOpacity>
-                    <Image source={require('../assets/icone-sininho.png')} style={styles.img}></Image>
-                </TouchableOpacity>
 
                 <TouchableOpacity onPress={() => setShowModal(!showModal)}>
                     <Image source={require('../assets/icone-barra-lateral.png')} style={styles.img}></Image>

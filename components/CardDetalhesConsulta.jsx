@@ -3,54 +3,67 @@ import { View, Text, Image, StyleSheet } from "react-native";
 import colors from "../design/colors";
 import {IdConsultaContext} from "../context/IdConsultaContext";
 
-// Exibe um layout estático (com dados fictícios), utilizado apenas para desenvolvimento visual e testes de design.
-// Exporta o componente para ser reutilizado em outras telas, permitindo futura integração com dados reais vindos da API.
+// Componente que exibe detalhes de uma consulta
 export default function CardDetalhesConsulta({ consulta }) {
 
     return (
         <View style={styles.containerPai}>
-            {/* Título e status lado a lado */}
+            {/* Cabeçalho com título da situação e data */}
             <View style={styles.containerTitle}>
-                {/* bloco esquerdo: título + data */}
+                {/* Bloco esquerdo: situação e data */}
                 <View style={styles.leftBlock}>
+                    {/* Exibe o texto da situação da consulta */}
                     <Text style={styles.title}>{consulta.situacao}</Text>
+                    {/* Converte a data de entrada da consulta para formato brasileiro */}
                     <Text style={styles.date}>{new Date(consulta.data_entrada).toLocaleDateString("pt-BR")}</Text>
                 </View>
 
-                {/* bloco direito: tag de status */}
+                {/* Bloco direito: exibe o status como tag */}
+                {/* Se situacao_vetor === 5 → concluída, senão → em andamento */}
                 <Text style={consulta.situacao_vetor === 5 ? styles.descriptionConcluded : styles.description}>{ consulta.situacao_vetor === 5 ? "Concluída" : "Em andamento" }</Text>
             </View>
 
-            {/* Timeline */}
+            {/* Timeline com as etapas da consulta */}
             <View style={styles.timeline}>
+                {/* Etapa 1: Recepção */}
                 <View style={styles.containerCircle}>
                     <Text style={styles.textEtapaRight}>Recepção</Text>
+                    {/* Círculo fica ativo se situacao_vetor >= 1 */}
                     <View style={[styles.circle, consulta.situacao_vetor >= 1 ? styles.circleActive : null]} />
                 </View>
 
+                {/* Linha entre as etapas */}
                 <View style={[styles.line, consulta.situacao_vetor >= 1 ? styles.circleActive : null]} />
 
+                {/* Etapa 2: Triagem */}
                 <View style={styles.containerCircle}>
                     <Text style={styles.textEtapaLeft}>Triagem</Text>
+                    {/* Círculo fica ativo se situacao_vetor >= 2 */}
                     <View style={[styles.circle, consulta.situacao_vetor >= 2 ? styles.circleActive : null]} />
                 </View>
-
+                
+                {/* Linha entre as etapas */}
                 <View style={[styles.line, consulta.situacao_vetor >= 3 ? styles.circleActive : null]} />
 
+                {/* Etapa 3: Consulta */}
                 <View style={styles.containerCircle}>
                     <Text style={styles.textEtapaRight}>Consulta</Text>
+                    {/* Círculo fica ativo se situacao_vetor >= 4 */}
                     <View style={[styles.circle, consulta.situacao_vetor >= 4 ? styles.circleActive : null]} />
                 </View>
 
+                {/* Linha entre as etapas */}
                 <View style={[styles.line, consulta.situacao_vetor >= 5 ? styles.circleActive : null]} />
-
+                
+                {/* Etapa 4: Alta */}
                 <View style={styles.containerCircle}>
                     <Text style={styles.textEtapaLeft}>Alta</Text>
+                    {/* Círculo fica ativo se situacao_vetor >= 5 */}
                     <View style={[styles.circle, consulta.situacao_vetor >= 5 ? styles.circleActive : null]} />
                 </View>
             </View>
 
-            {/* Rodapé */}
+            {/* Rodapé com informações adicionais */}
             <View style={styles.footer}>
                 <View style={styles.footerItem}>
                     <Text style={styles.footerLabel}>Tempo até a próxima etapa</Text>
@@ -59,13 +72,16 @@ export default function CardDetalhesConsulta({ consulta }) {
                             source={require("../assets/clock-timer.png")}
                             style={styles.ClockIcon}
                         />
+                        {/* Valor estático apenas para exemplo visual */}
                         <Text style={styles.footerValue}>00:18:32</Text>
                     </View>
                 </View>
-
+                
+                {/* Posição na fila */}
                 <View style={styles.footerItem}>
                     <Text style={styles.footerLabel}>Posição na fila</Text>
                     <View style={styles.footerContent}>
+                        {/* Valor também estático */}
                         <Text style={styles.footerValue}>7°</Text>
                         <Image
                             source={require("../assets/icone-user-simples.png")}

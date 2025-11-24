@@ -185,8 +185,10 @@ const styles = StyleSheet.create({
     },
     footerLabel: {
         color: colors.blueDark,
-        fontSize: 16,
+        fontSize: 14,
+        width: 130,
         fontWeight: "bold",
+        textAlign: "center",
     },
     footerContent: {
         flexDirection: "row",
@@ -194,7 +196,7 @@ const styles = StyleSheet.create({
         gap: 8,
     },
     footerValue: {
-        fontSize: 24,
+        fontSize: 21,
         fontWeight: "bold",
         color: colors.black,
     },

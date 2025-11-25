@@ -85,7 +85,7 @@ export default function CardDetalhesConsulta({ consulta }) {
             {/* Rodapé com informações adicionais */}
             <View style={styles.footer}>
                 <View style={styles.footerItem}>
-                    <Text style={styles.footerLabel}>{consulta.situacao_vetor == 5 ? "Tempo total de atendimento" : "Tempo até a próxima etapa"}</Text>
+                    <Text style={styles.footerLabel}>{consulta.situacao_vetor == 5 ? "Tempo total de atendimento" : "Tempo estimado até a próxima etapa"}</Text>
                     <View style={styles.footerContent}>
                         <Image
                             source={require("../assets/clock-timer.png")}

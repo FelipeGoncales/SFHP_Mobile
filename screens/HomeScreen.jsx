@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
     View,
     Text,
@@ -18,11 +18,15 @@ import Header from '../components/Header';
 import CardConsulta from "../components/CardConsulta";
 import CardConsultaAtual from "../components/CardConsultaAtual";
 import ModalBarraLateral from "../components/ModalBarraLateral";
+import LoadingScreen from "../components/LoadingScreen";
 
 function HomeScreen() {
 
     // Estado para armazenar a lista de consultas obtidas da API.
     const [consultas, setConsultas] = useState([]);
+
+    // Tela de loading
+    const [loading, setLoading] = useState(true);
 
     // Estado para controlar a visibilidade do modal.
     const [showModal, setShowModal] = useState(false);
@@ -55,6 +59,8 @@ function HomeScreen() {
 
             // Atualiza o estado 'consultas' com a lista retornada pela API.
             setConsultas(data.consultas);
+
+            setLoading(false);
         };
 
         fetchGetConsultas(); // Executa a busca de consultas.
@@ -66,6 +72,7 @@ function HomeScreen() {
 
     // Função acionada pelo 'RefreshControl' quando o usuário puxa a tela para baixo.
     const onRefresh = async () => {
+        setLoading(true);
         setRefreshing(true); // Ativa o indicador de recarregamento.
 
         // Define uma função interna e assíncrona para buscar os dados da API.
@@ -91,6 +98,7 @@ function HomeScreen() {
         await fetchGetConsultas();
         // Desativa o indicador de recarregamento, sinalizando que a operação terminou.
         setRefreshing(false);
+        setLoading(false);
     };
 
     return (
@@ -102,16 +110,14 @@ function HomeScreen() {
                 />
             }
         >
-            {
-                refreshing ? (
-                    <View style={styles.loadingScreen}>
-                        <ActivityIndicator size="large" color={colors.blueDark} />
-                    </View>
-                ) : null
-            }
-
-
             <View style={styles.container}>
+
+                {
+                    loading ? (
+                        <LoadingScreen />
+                    ) : null
+                }
+
                 <Header setShowModal={setShowModal} showModal={showModal} />
 
                 {

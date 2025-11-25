@@ -7,9 +7,9 @@ import {
     TouchableOpacity,
     ScrollView,
     RefreshControl,
-    Dimensions,
-    ActivityIndicator
+    Dimensions
 } from "react-native";
+import LoadingScreen from "../components/LoadingScreen";
 import { useNavigation } from "@react-navigation/native";
 import colors from "../design/colors";
 import CardDetalhesConsulta from "../components/CardDetalhesConsulta";
@@ -17,10 +17,12 @@ import CardDiagnostico from "../components/CardDiagnostico";
 import { IdConsultaContext } from "../context/IdConsultaContext";
 import {TokenContext} from "../context/tokenContext";
 import urlAPI from "../config/urlAPI";
-import {CpfPacienteContext} from "../context/CpfPacienteContext";
 
 function DetalhesConsultaScreen() {
     const navigation = useNavigation();
+
+    // Tela de loading
+    const [loading, setLoading] = useState(true);
 
     // Obtém o idConsulta
     const { idConsulta } = useContext(IdConsultaContext);
@@ -83,8 +85,14 @@ function DetalhesConsultaScreen() {
 
     // Faz a requisição para obter os dados
     useEffect(() => {
-        fetchConsulta();
-        fetchDiagnostico();
+        async function handleRefresh() {
+            await fetchConsulta();
+            await fetchDiagnostico();
+
+            setLoading(false);
+        }
+
+        handleRefresh();
     }, [idConsulta]);
 
     // Função de recarregamento assíncrona
@@ -95,6 +103,12 @@ function DetalhesConsultaScreen() {
 
     return (
         <View style={styles.container}>
+
+            {
+                loading ? (
+                    <LoadingScreen />
+                ) : null
+            }
 
             {/* Botão de voltar */}
             <TouchableOpacity style={styles.Return} onPress={navigation.goBack}>

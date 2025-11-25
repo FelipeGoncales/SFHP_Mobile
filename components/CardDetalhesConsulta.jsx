@@ -6,6 +6,25 @@ import {IdConsultaContext} from "../context/IdConsultaContext";
 // Componente que exibe detalhes de uma consulta
 export default function CardDetalhesConsulta({ consulta }) {
 
+    const minutos = consulta.tempo_espera;
+
+    // Espera em horas
+    let espera_horas = Math.floor(minutos / 60);
+
+    if (String(espera_horas).length < 2) {
+        espera_horas = `0${espera_horas}`
+    }
+
+    // Espera em minutos
+    let espera_minutos = minutos % 60;
+
+    if (String(espera_minutos).length < 2) {
+        espera_minutos = `0${espera_minutos}`
+    }
+
+    // Tempo formatado
+    const tempo_espera = `${espera_horas}h ${espera_minutos}min`;
+
     return (
         <View style={styles.containerPai}>
             {/* Cabeçalho com título da situação e data */}
@@ -66,29 +85,17 @@ export default function CardDetalhesConsulta({ consulta }) {
             {/* Rodapé com informações adicionais */}
             <View style={styles.footer}>
                 <View style={styles.footerItem}>
-                    <Text style={styles.footerLabel}>Tempo até a próxima etapa</Text>
+                    <Text style={styles.footerLabel}>{consulta.situacao_vetor == 5 ? "Tempo total de atendimento" : "Tempo até a próxima etapa"}</Text>
                     <View style={styles.footerContent}>
                         <Image
                             source={require("../assets/clock-timer.png")}
                             style={styles.ClockIcon}
                         />
                         {/* Valor estático apenas para exemplo visual */}
-                        <Text style={styles.footerValue}>00:18:32</Text>
+                        <Text style={styles.footerValue}>{tempo_espera}</Text>
                     </View>
                 </View>
-                
-                {/* Posição na fila */}
-                <View style={styles.footerItem}>
-                    <Text style={styles.footerLabel}>Posição na fila</Text>
-                    <View style={styles.footerContent}>
-                        {/* Valor também estático */}
-                        <Text style={styles.footerValue}>7°</Text>
-                        <Image
-                            source={require("../assets/icone-user-simples.png")}
-                            style={styles.UserIcon}
-                        />
-                    </View>
-                </View>
+
             </View>
         </View>
     );
@@ -175,7 +182,7 @@ const styles = StyleSheet.create({
 
     footer: {
         flexDirection: "row",
-        justifyContent: "space-between",
+        justifyContent: "center",
         width: "100%",
         marginTop: 25,
     },
@@ -185,8 +192,7 @@ const styles = StyleSheet.create({
     },
     footerLabel: {
         color: colors.blueDark,
-        fontSize: 14,
-        width: 130,
+        fontSize: 16,
         fontWeight: "bold",
         textAlign: "center",
     },

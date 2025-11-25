@@ -73,9 +73,14 @@ function FormProfile() {
                     formatTelefone(user.telefone, setTelefone);
                     
                     // Converte para formato brasileiro e atualiza a data.
-                    setDataNascimento(
-                        new Date(user.data_nascimento).toLocaleDateString("pt-BR")
-                    );
+                    const date = new Date(user.data_nascimento);
+
+                    // pegamos o UTC para não ter problemas de timezone
+                    const dd = String(date.getUTCDate()).padStart(2, "0");
+                    const mm = String(date.getUTCMonth() + 1).padStart(2, "0");
+                    const yyyy = date.getUTCFullYear();
+
+                    setDataNascimento(`${dd}/${mm}/${yyyy}`);
                     
                     // Atualiza o número do SUS.
                     setSus(user.coren_crm_sus)

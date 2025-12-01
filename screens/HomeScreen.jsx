@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     },
     textLogout: {
         color: colors.white,
-        fontWeight: 700,
+        fontWeight: "700",
     },
     containerCardConsulta: {
         boxSizing: 'border-box',
